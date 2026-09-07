@@ -93,7 +93,7 @@ Production without Supabase or Resend returns `503`.
 
 - [ ] Create Supabase project (human), run `supabase/migrations/20240907000000_accredited_interest.sql`
 - [ ] Add Vercel env vars (no secrets in git)
-- [ ] Create Stripe products/prices **only if** solicitation is cleared
+- [ ] Stripe **test** onboarding placeholder already exists on Apixis.dev (`prod_VDKg3OJ4Mhbsjy` / `price_1UCu18BM0XItOdByzHvFHAMk`); create additional products/prices **only if** solicitation is cleared
 - [ ] Attach Stripe webhook
 - [ ] Configure `halaxis.dev` DNS
 - [ ] Counsel review of all `[Counsel-review placeholder]` copy, Privacy, Terms, and Risk
