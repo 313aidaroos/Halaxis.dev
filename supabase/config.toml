@@ -1,0 +1,14 @@
+# Stub config so the repo matches Apixis-family layout (src/, supabase/, .env.example, vercel.json).
+# Do not treat this file as a provisioned Supabase project. Create the project in the
+# Supabase dashboard, then paste URL and keys into Vercel / .env.local.
+
+project_id = "halaxis-placeholder"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15
+
+[auth]
+enabled = true
