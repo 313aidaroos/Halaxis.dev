@@ -60,12 +60,13 @@ Production without Supabase or Resend returns `503`.
 - Pages: `/checkout/success`, `/checkout/cancel`
 - UI on `/contact` stays hidden/disabled unless `ENABLE_PAYMENTS=true`
 - Never pass `payment_method_types` (dynamic payment methods)
-- Price IDs come from `STRIPE_PRICE_ALLOCATION` or `STRIPE_PRICE_SUBSCRIPTION`
+- Price IDs come from `STRIPE_PRICE_ONBOARDING`, then `STRIPE_PRICE_ALLOCATION` or `STRIPE_PRICE_SUBSCRIPTION`
+- Apixis.dev **test mode** already has a Halaxis placeholder (do not treat as live): product `prod_VDKg3OJ4Mhbsjy` (Halaxis Investor Onboarding, $0/mo) and price `price_1UCu18BM0XItOdByzHvFHAMk` (`STRIPE_PRICE_ONBOARDING` in `.env.example`). `ENABLE_PAYMENTS` stays `false`.
 
 ### Stripe Dashboard steps (manual)
 
-1. Create a Stripe account (restricted key preferred over a full secret key).
-2. Create a product/price only when counsel says a charge is lawful. Copy the `price_...` id into `STRIPE_PRICE_ALLOCATION`.
+1. Use the existing Apixis.dev Stripe **test** account (restricted key preferred over a full secret key). The onboarding placeholder product/price above is already created in test mode.
+2. Create additional products/prices only when counsel says a charge is lawful. Copy any extra `price_...` id into `STRIPE_PRICE_ALLOCATION` if needed.
 3. Add `https://<your-domain>/api/stripe/webhook` as a webhook endpoint. Events: `checkout.session.completed` (and optionally async/expired). Copy the signing secret to `STRIPE_WEBHOOK_SECRET`.
 4. Set `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`.
 5. Leave `ENABLE_PAYMENTS` unset or `false` until SEC/counsel clearance. Then set `ENABLE_PAYMENTS=true` and redeploy.

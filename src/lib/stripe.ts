@@ -16,7 +16,7 @@ export function getStripe(): Stripe | null {
 }
 
 export function getStripePriceId(
-  name: "ALLOCATION" | "SUBSCRIPTION" = "ALLOCATION",
+  name: "ONBOARDING" | "ALLOCATION" | "SUBSCRIPTION" = "ONBOARDING",
 ): string | undefined {
   const key = `STRIPE_PRICE_${name}` as const;
   const value = process.env[key];

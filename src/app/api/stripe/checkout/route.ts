@@ -13,7 +13,10 @@ export async function POST() {
     return NextResponse.json({ error: gate.error }, { status: gate.status });
   }
 
-  const price = getStripePriceId("ALLOCATION") ?? getStripePriceId("SUBSCRIPTION");
+  const price =
+    getStripePriceId("ONBOARDING") ??
+    getStripePriceId("ALLOCATION") ??
+    getStripePriceId("SUBSCRIPTION");
   if (!price) {
     return NextResponse.json(
       { error: "No STRIPE_PRICE_* environment variable is set." },
