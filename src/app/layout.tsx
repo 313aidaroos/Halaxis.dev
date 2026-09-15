@@ -25,7 +25,7 @@ const serif = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Halal & Sharia-compliant investing`,
+    default: `${siteConfig.name} — Halal & Sharia-aligned investing (in formation)`,
     template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -45,12 +45,12 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — Halal & Sharia-compliant investing`,
+    title: `${siteConfig.name} — Halal & Sharia-aligned investing (in formation)`,
     description: siteConfig.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — Halal & Sharia-compliant investing`,
+    title: `${siteConfig.name} — Halal & Sharia-aligned investing (in formation)`,
     description: siteConfig.description,
   },
   robots: {

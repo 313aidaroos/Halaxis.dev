@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Halaxis — Halal & Sharia-compliant investing";
+export const alt = "Halaxis — Halal & Sharia-aligned investing (in formation)";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -36,7 +36,7 @@ export default function TwitterImage() {
             Halal capital, stewarded with discipline.
           </div>
           <div style={{ marginTop: 24, fontSize: 28, color: "#b7c0cc" }}>
-            Sharia-compliant platform in formation · not an offering
+            Sharia-aligned platform in formation · not an offering
           </div>
         </div>
       </div>

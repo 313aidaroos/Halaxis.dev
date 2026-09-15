@@ -16,7 +16,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About"
         title="A platform in formation, not a live fund raise."
-        description={`${siteConfig.name} is being built as a Halal and Sharia-compliant investment platform associated with ${siteConfig.principal} and ${siteConfig.legalName}.`}
+        description={`${siteConfig.name} is being built as a Halal- and Sharia-aligned investment platform associated with ${siteConfig.principal} and ${siteConfig.legalName}. Formal scholar review is pending.`}
       />
       <div className="container max-w-3xl space-y-8 py-12 md:py-16">
         <LegalBanner compact />
