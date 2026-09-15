@@ -9,7 +9,7 @@ export function SiteFooter() {
         <div className="space-y-3">
           <p className="font-serif text-xl text-foreground">{siteConfig.name}</p>
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-            A Halal and Sharia-compliant investment platform in formation.
+            A Halal- and Sharia-aligned investment platform in formation. Formal scholar review is pending.
             Operated in connection with {siteConfig.principal} and{" "}
             {siteConfig.legalName}.
           </p>

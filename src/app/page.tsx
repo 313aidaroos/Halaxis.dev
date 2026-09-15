@@ -62,9 +62,10 @@ export default function HomePage() {
               Halal capital, stewarded with discipline.
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              {siteConfig.name} is a Halal and Sharia-compliant investment
+              {siteConfig.name} is a Halal- and Sharia-aligned investment
               platform being built by {siteConfig.principal} through{" "}
-              {siteConfig.legalName}. This site is for education and
+              {siteConfig.legalName}. Formal scholar review and a published
+              methodology are pending. This site is for education and
               accredited-investor interest only.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
