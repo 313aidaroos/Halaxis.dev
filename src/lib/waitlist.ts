@@ -20,6 +20,9 @@ export async function persistWaitlist(
     });
 
     if (error) {
+      if (error.code === "23505") {
+        throw new Error("That email is already on the interest list.");
+      }
       throw new Error(`Supabase insert failed: ${error.message}`);
     }
 

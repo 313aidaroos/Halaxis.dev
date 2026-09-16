@@ -70,10 +70,10 @@ export default function HomePage() {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild variant="gold" size="lg">
-                <Link href="/contact">Join the interest list</Link>
+                <Link href="/screen">Open the Shariah screen</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="/compliance">Read Sharia & compliance</Link>
+                <Link href="/contact">Join the interest list</Link>
               </Button>
             </div>
           </div>

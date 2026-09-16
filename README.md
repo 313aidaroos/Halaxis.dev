@@ -2,7 +2,7 @@
 
 Halal and Sharia-compliant hedge-fund **marketing** and accredited-investor **interest** site for Awad Alaidaroos / Apixis Dev LLC.
 
-This release is production-ready for Vercel as a marketing + waitlist surface. It is **not** an offer of securities, **not** investment advice, and **not** a live fund subscription. Payments and solicitation stay off until counsel and SEC-related gates are cleared.
+This release ships a working **Halaxis v1 Shariah screen** (`/screen`, `POST /api/screen`, `GET /api/holdings`) plus accredited-investor interest (`POST /api/waitlist`). It is **not** an offer of securities, **not** investment advice, **not** a fatwa, and **not** a live fund. Payments and solicitation stay off until counsel and SEC-related gates are cleared. No live trading.
 
 ## Stack (Apixis / Contraxis family)
 
@@ -39,6 +39,16 @@ Optional `.env.local` values (see `.env.example` for the full Contraxis-shaped l
 - `AI_PROVIDER`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `AI_MODEL`
 - `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_TO`
 - `ENABLE_PAYMENTS` — must be the string `true` to expose Checkout
+
+## Shariah screen (the product)
+
+Named standard: **Halaxis v1** — AAOIFI-style business screens + DJIM 33% financial-ratio caps.
+
+- UI: `/screen`
+- `POST /api/screen` `{ "ticker": "AAPL" }` — evaluates, then writes `screen_events` when Supabase is configured
+- `GET /api/holdings` — illustrative universe from `illustrative_universe` (seeded on first read)
+
+This is an engineering screen, not a fatwa. Conventional banks, insurers, alcohol, gambling, tobacco, weapons-as-core, adult, and cannabis-as-core fail the business screen. Interest-based leverage and shorting are not offered.
 
 ## Waitlist persistence
 
@@ -91,8 +101,8 @@ Production without Supabase or Resend returns `503`.
 
 ## Remaining manual steps
 
-- [ ] Create Supabase project (human), run `supabase/migrations/20240907000000_accredited_interest.sql`
-- [ ] Add Vercel env vars (no secrets in git)
+- [x] Supabase project `halaxis` created; waitlist + screen tables applied
+- [x] Vercel env: Supabase trio, `NEXT_PUBLIC_APP_URL`, `ENABLE_PAYMENTS=false`
 - [ ] Stripe **test** onboarding placeholder already exists on Apixis.dev (`prod_VDKg3OJ4Mhbsjy` / `price_1UCu18BM0XItOdByzHvFHAMk`); create additional products/prices **only if** solicitation is cleared
 - [ ] Attach Stripe webhook
 - [ ] Configure `halaxis.dev` DNS
