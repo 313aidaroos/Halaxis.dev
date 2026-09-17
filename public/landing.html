@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaxis • Build real companies from your phone</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus:wght@400&amp;family=Manrope:wght@400;500;600;700&amp;display=swap">
+  <style>
+    :root {
+      --bg: #071E17;
+      --panel: #0C3327;
+      --jade: #2FA36B;
+      --gold: #C6A75B;
+      --ivory: #F3EEE1;
+    }
+    
+    body {
+      font-family: 'Manrope', system_ui, sans-serif;
+      background-color: #071E17;
+      color: #F3EEE1;
+    }
+    
+    .heading {
+      font-family: 'Marcellus', Georgia, serif;
+      font-weight: 400;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #C6A75B;
+      position: relative;
+      display: inline-block;
+      padding-left: 34px;
+    }
+    
+    .eyebrow::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 26px;
+      height: 1px;
+      background-color: #C6A75B;
+    }
+
+    .star {
+      stroke: #C6A75B;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .nav {
+      background: rgba(12, 51, 39, 0.8);
+      backdrop-filter: blur(12px);
+    }
+
+    .section {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .industry-card {
+      transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .industry-card:hover {
+      transform: translateY(-3px);
+      border-color: #C6A75B;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gold-border {
+      border-color: #C6A75B;
+    }
+
+    .most-chosen {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #C6A75B;
+      color: #071E17;
+      font-size: 11px;
+      padding: 1px 14px;
+      border-radius: 9999px;
+      letter-spacing: 0.5px;
+    }
+
+    .agent-card {
+      transition: all 0.2s ease;
+    }
+    
+    .agent-card:hover {
+      border-color: #C6A75B;
+      transform: translateY(-2px);
+    }
+
+    .waitlist-glow {
+      box-shadow: 0 0 0 1px rgba(198,167,91,0.3),
+                  0 0 40px rgba(198,167,91,0.15);
+    }
+
+    .ticker {
+      white-space: nowrap;
+      animation: ticker 25s linear infinite;
+    }
+
+    .star-rotate {
+      animation: rotate-star 90s linear infinite;
+    }
+
+    @keyframes rotate-star {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .rub-el-hizb {
+      stroke: #C6A75B;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .nav-link {
+      transition: color 0.2s ease;
+    }
+    
+    .nav-link:hover {
+      color: #C6A75B;
+    }
+
+    @media (max-width: 960px) {
+      .desktop-nav {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#071E17] text-[#F3EEE1]">
+
+  <!-- 1. Sticky Nav -->
+  <nav class="nav sticky top-0 z-50 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+      <div class="flex items-center gap-3">
+        <!-- Logo with 26px star -->
+        <svg width="26" height="26" viewBox="0 0 100 100" class="star">
+          <g transform="translate(50,50)">
+            <!-- Outer square -->
+            <rect x="-35" y="-35" width="70" height="70" transform="rotate(45)" />
+            <!-- Inner square -->
+            <rect x="-25" y="-25" width="50" height="50" />
+          </g>
+        </svg>
+        <div class="font-medium tracking-[3px] text-lg">HALAXIS</div>
+      </div>
+
+      <div class="desktop-nav flex items-center gap-9 text-sm">
+        <a href="#industries" class="nav-link">Industries</a>
+        <a href="#how" class="nav-link">How it works</a>
+        <a href="#membership" class="nav-link">Membership</a>
+        <a href="#amanah" class="nav-link">Amanah</a>
+      </div>
+
+      <a href="#waitlist" 
+         class="px-5 py-2.5 rounded-full bg-[#C6A75B] text-[#071E17] text-sm font-medium hover:bg-[#d4b87a] transition-colors">
+        Join the waitlist
+      </a>
+    </div>
+  </nav>
+
+  <!-- 2. Hero -->
+  <section class="max-w-7xl mx-auto px-6 pt-16 pb-20">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="eyebrow mb-4">INVITE-ONLY PLATFORM</div>
+        
+        <h1 class="heading text-6xl md:text-7xl leading-[1.05] tracking-[-1.5px] mb-6">
+          Build real companies<br>
+          from your <span class="text-[#C6A75B]">phone</span>.
+        </h1>
+        
+        <p class="max-w-md text-lg text-[#F3EEE1]/80 mb-8">
+          A private platform for launching and scaling high-value, halal businesses across eight strategic industries.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#waitlist" 
+             class="px-8 py-3.5 rounded-full bg-[#C6A75B] text-[#071E17] font-medium text-sm tracking-wide hover:bg-[#d4b87a] transition-all">
+            Request an invitation
+          </a>
+          <a href="#how" 
+             class="px-8 py-3.5 rounded-full border border-white/30 hover:bg-white/5 transition-all text-sm">
+            See how it works
+          </a>
+        </div>
+
+        <div class="mt-6 text-xs tracking-[1px] text-[#C6A75B]/80">
+          INVITE-ONLY LAUNCH · TRUST FIRST, SCALE SECOND
+        </div>
+      </div>
+
+      <!-- Rotating star ornament -->
+      <div class="hidden md:flex justify-center relative">
+        <div class="relative w-[380px] h-[380px]">
+          <svg width="380" height="380" viewBox="0 0 380 380" class="star-rotate">
+            <g transform="translate(190,190)">
+              <!-- Large outer star -->
+              <g class="rub-el-hizb">
+                <rect x="-95" y="-95" width="190" height="190" transform="rotate(45)" />
+                <rect x="-68" y="-68" width="136" height="136" />
+              </g>
+              <!-- Middle ring -->
+              <g class="rub-el-hizb" style="stroke-width:1.4">
+                <rect x="-72" y="-72" width="144" height="144" transform="rotate(45)" />
+                <rect x="-52" y="-52" width="104" height="104" />
+              </g>
+              <!-- Inner ring -->
+              <g class="rub-el-hizb" style="stroke-width:1.1">
+                <rect x="-48" y="-48" width="96" height="96" transform="rotate(45)" />
+                <rect x="-34" y="-34" width="68" height="68" />
+              </g>
+            </g>
+          </svg>
+          
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-5xl font-light tracking-[4px] text-[#C6A75B]">8</div>
+              <div class="text-xs tracking-[3px] mt-1 text-[#C6A75B]/70">INDUSTRIES</div>
+              <div class="text-[10px] tracking-[2px] text-[#C6A75B]/50 mt-px">ONE PLATFORM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Industry Ticker -->
+  <div class="border-y border-white/10 py-4 overflow-hidden bg-[#0C3327]">
+    <div class="flex items-center gap-8 text-xs tracking-[3px] text-[#C6A75B] ticker">
+      <span>OIL &amp; ENERGY</span><span class="text-[#C6A75B]/40">◆</span>
+      <span>COMMODITIES</span><span class="text-[#C6A75B]/40">◆</span>
+      <span>LOGISTICS</span><span class="text-[#C6A75B]/40">◆</span>
+      <span>AVIATION</span><span class="text-[#C6A75B]/40">◆</span>
+      <span>HALAL FINANCE</span><span class="text-[#C6A75B]/40">◆</span>
+      <span>REAL ESTATE</span><span class="text-[#C6A75B]/40">◆</span>
+      <span>TRADE</span><span class="text-[#C6A75B]/40">◆</span>
+      <span>LUXURY ASSETS</span>
+    </div>
+  </div>
+
+  <!-- 4. Industries -->
+  <section id="industries" class="max-w-7xl mx-auto px-6 py-20 section">
+    <div class="eyebrow mb-8">EIGHT STRATEGIC VERTICALS</div>
+    <h2 class="heading text-5xl tracking-[-1px] mb-12">Industries that matter.</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="industry-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <svg width="22" height="22" viewBox="0 0 100 100" class="star mb-6"><g transform="translate(50,50)"><rect x="-28" y="-28" width="56" height="56" transform="rotate(45)"/><rect x="-20" y="-20" width="40" height="40"/></g></svg>
+        <div class="font-medium text-lg">Oil &amp; Energy</div>
+        <div class="text-sm text-[#F3EEE1]/60 mt-1">Upstream, midstream, and downstream halal energy assets.</div>
+      </div>
+      <div class="industry-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <svg width="22" height="22" viewBox="0 0 100 100" class="star mb-6"><g transform="translate(50,50)"><rect x="-28" y="-28" width="56" height="56" transform="rotate(45)"/><rect x="-20" y="-20" width="40" height="40"/></g></svg>
+        <div class="font-medium text-lg">Commodities</div>
+        <div class="text-sm text-[#F3EEE1]/60 mt-1">Agricultural, metals, and energy commodities trading.</div>
+      </div>
+      <div class="industry-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <svg width="22" height="22" viewBox="0 0 100 100" class="star mb-6"><g transform="translate(50,50)"><rect x="-28" y="-28" width="56" height="56" transform="rotate(45)"/><rect x="-20" y="-20" width="40" height="40"/></g></svg>
+        <div class="font-medium text-lg">Logistics</div>
+        <div class="text-sm text-[#F3EEE1]/60 mt-1">Port operations, freight, and supply chain infrastructure.</div>
+      </div>
+      <div class="industry-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <svg width="22" height="22" viewBox="0 0 100 100" class="star mb-6"><g transform="translate(50,50)"><rect x="-28" y="-28" width="56" height="56" transform="rotate(45)"/><rect x="-20" y="-20" width="40" height="40"/></g></svg>
+        <div class="font-medium text-lg">Aviation</div>
+        <div class="text-sm text-[#F3EEE1]/60 mt-1">Aircraft leasing, MRO, and airport development.</div>
+      </div>
+      <div class="industry-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <svg width="22" height="22" viewBox="0 0 100 100" class="star mb-6"><g transform="translate(50,50)"><rect x="-28" y="-28" width="56" height="56" transform="rotate(45)"/><rect x="-20" y="-20" width="40" height="40"/></g></svg>
+        <div class="font-medium text-lg">Halal Finance</div>
+        <div class="text-sm text-[#F3EEE1]/60 mt-1">Sukuk structuring, Islamic funds, and Shariah-compliant vehicles.</div>
+      </div>
+      <div class="industry-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <svg width="22" height="22" viewBox="0 0 100 100" class="star mb-6"><g transform="translate(50,50)"><rect x="-28" y="-28" width="56" height="56" transform="rotate(45)"/><rect x="-20" y="-20" width="40" height="40"/></g></svg>
+        <div class="font-medium text-lg">Real Estate</div>
+        <div class="text-sm text-[#F3EEE1]/60 mt-1">Commercial, industrial, and master-planned developments.</div>
+      </div>
+      <div class="industry-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <svg width="22" height="22" viewBox="0 0 100 100" class="star mb-6"><g transform="translate(50,50)"><rect x="-28" y="-28" width="56" height="56" transform="rotate(45)"/><rect x="-20" y="-20" width="40" height="40"/></g></svg>
+        <div class="font-medium text-lg">Trade</div>
+        <div class="text-sm text-[#F3EEE1]/60 mt-1">Cross-border trade platforms and supply chain financing.</div>
+      </div>
+      <div class="industry-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <svg width="22" height="22" viewBox="0 0 100 100" class="star mb-6"><g transform="translate(50,50)"><rect x="-28" y="-28" width="56" height="56" transform="rotate(45)"/><rect x="-20" y="-20" width="40" height="40"/></g></svg>
+        <div class="font-medium text-lg">Luxury Assets</div>
+        <div class="text-sm text-[#F3EEE1]/60 mt-1">High-value assets, collectibles, and alternative holdings.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. How it works -->
+  <section id="how" class="max-w-3xl mx-auto px-6 py-20 border-t border-white/10 section">
+    <div class="eyebrow mb-8">SIMPLE. RIGOROUS. INVITE-ONLY.</div>
+    <h2 class="heading text-5xl tracking-[-1px] mb-12">How it works.</h2>
+
+    <div class="space-y-px">
+      <div class="flex gap-8 py-7 border-b border-white/10">
+        <div class="step-number flex-shrink-0"><svg width="60" height="60" viewBox="0 0 100 100"><g transform="translate(50,50)"><g class="rub-el-hizb"><rect x="-22" y="-22" width="44" height="44" transform="rotate(45)"/><rect x="-16" y="-16" width="32" height="32"/></g></g><text x="50" y="55" text-anchor="middle" fill="#C6A75B" font-size="22" font-family="Manrope" font-weight="600">01</text></svg></div>
+        <div><div class="font-medium text-lg">Apply</div><div class="text-[#F3EEE1]/70 mt-1">Submit your background and intended vertical through the private portal.</div></div>
+      </div>
+      <div class="flex gap-8 py-7 border-b border-white/10">
+        <div class="step-number flex-shrink-0"><svg width="60" height="60" viewBox="0 0 100 100"><g transform="translate(50,50)"><g class="rub-el-hizb"><rect x="-22" y="-22" width="44" height="44" transform="rotate(45)"/><rect x="-16" y="-16" width="32" height="32"/></g></g><text x="50" y="55" text-anchor="middle" fill="#C6A75B" font-size="22" font-family="Manrope" font-weight="600">02</text></svg></div>
+        <div><div class="font-medium text-lg">Review</div><div class="text-[#F3EEE1]/70 mt-1">Our team conducts diligence focused on character, track record, and alignment.</div></div>
+      </div>
+      <div class="flex gap-8 py-7 border-b border-white/10">
+        <div class="step-number flex-shrink-0"><svg width="60" height="60" viewBox="0 0 100 100"><g transform="translate(50,50)"><g class="rub-el-hizb"><rect x="-22" y="-22" width="44" height="44" transform="rotate(45)"/><rect x="-16" y="-16" width="32" height="32"/></g></g><text x="50" y="55" text-anchor="middle" fill="#C6A75B" font-size="22" font-family="Manrope" font-weight="600">03</text></svg></div>
+        <div><div class="font-medium text-lg">Activate</div><div class="text-[#F3EEE1]/70 mt-1">Receive your membership and private workspace with AI agents pre-configured for your industry.</div></div>
+      </div>
+      <div class="flex gap-8 py-7 border-b border-white/10">
+        <div class="step-number flex-shrink-0"><svg width="60" height="60" viewBox="0 0 100 100"><g transform="translate(50,50)"><g class="rub-el-hizb"><rect x="-22" y="-22" width="44" height="44" transform="rotate(45)"/><rect x="-16" y="-16" width="32" height="32"/></g></g><text x="50" y="55" text-anchor="middle" fill="#C6A75B" font-size="22" font-family="Manrope" font-weight="600">04</text></svg></div>
+        <div><div class="font-medium text-lg">Launch</div><div class="text-[#F3EEE1]/70 mt-1">Incorporate, structure, and begin operations with full operational tooling.</div></div>
+      </div>
+      <div class="flex gap-8 py-7">
+        <div class="step-number flex-shrink-0"><svg width="60" height="60" viewBox="0 0 100 100"><g transform="translate(50,50)"><g class="rub-el-hizb"><rect x="-22" y="-22" width="44" height="44" transform="rotate(45)"/><rect x="-16" y="-16" width="32" height="32"/></g></g><text x="50" y="55" text-anchor="middle" fill="#C6A75B" font-size="22" font-family="Manrope" font-weight="600">05</text></svg></div>
+        <div><div class="font-medium text-lg">Scale</div><div class="text-[#F3EEE1]/70 mt-1">Access capital partners, strategic introductions, and ongoing governance support.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Membership -->
+  <section id="membership" class="max-w-6xl mx-auto px-6 py-20 border-t border-white/10 section">
+    <div class="text-center mb-12">
+      <div class="eyebrow mb-4">MEMBERSHIP</div>
+      <h2 class="heading text-5xl tracking-[-1px]">Choose your level of access.</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <!-- Tier 1 -->
+      <div class="border border-white/10 bg-[#0C3327] rounded-3xl p-8 relative">
+        <div class="font-medium text-xl">Founder</div>
+        <div class="mt-1 text-4xl tracking-tight">AED 85k</div>
+        <div class="text-xs tracking-widest text-[#C6A75B]/70 mt-1">ANNUAL MEMBERSHIP</div>
+        
+        <ul class="mt-8 space-y-3 text-sm">
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Access to 2 verticals</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Core AI agents</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Legal &amp; structuring support</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Quarterly governance reviews</li>
+        </ul>
+        <a href="#waitlist" class="mt-8 block text-center py-3 border border-white/30 rounded-full text-sm hover:bg-white/5">Apply</a>
+      </div>
+
+      <!-- Tier 2 - Most chosen -->
+      <div class="border-2 border-[#C6A75B] bg-[#0C3327] rounded-3xl p-8 relative">
+        <div class="most-chosen">MOST CHOSEN</div>
+        <div class="font-medium text-xl">Principal</div>
+        <div class="mt-1 text-4xl tracking-tight">AED 195k</div>
+        <div class="text-xs tracking-widest text-[#C6A75B]/70 mt-1">ANNUAL MEMBERSHIP</div>
+        
+        <ul class="mt-8 space-y-3 text-sm">
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Full access to all 8 verticals</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Full AI Venture Board</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Dedicated deal team</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Priority capital introductions</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Amanah project allocation</li>
+        </ul>
+        <a href="#waitlist" class="mt-8 block text-center py-3 bg-[#C6A75B] text-[#071E17] rounded-full text-sm font-medium hover:bg-[#d4b87a]">Apply as Principal</a>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="border border-white/10 bg-[#0C3327] rounded-3xl p-8 relative">
+        <div class="font-medium text-xl">Institution</div>
+        <div class="mt-1 text-4xl tracking-tight">AED 420k</div>
+        <div class="text-xs tracking-widest text-[#C6A75B]/70 mt-1">ANNUAL MEMBERSHIP</div>
+        
+        <ul class="mt-8 space-y-3 text-sm">
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> All Principal benefits</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Custom agent development</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Board-level reporting</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Co-investment rights</li>
+          <li class="flex gap-3"><span class="text-[#C6A75B]">•</span> Private Amanah fund</li>
+        </ul>
+        <a href="#waitlist" class="mt-8 block text-center py-3 border border-white/30 rounded-full text-sm hover:bg-white/5">Contact us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. AI Venture Board -->
+  <section class="max-w-7xl mx-auto px-6 py-20 border-t border-white/10 section">
+    <div class="max-w-2xl mb-12">
+      <div class="eyebrow mb-4">AI VENTURE BOARD</div>
+      <h2 class="heading text-5xl tracking-[-1px]">Your executive team, always on.</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="agent-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <div class="text-[#C6A75B] text-sm tracking-widest">CEO AGENT</div>
+        <div class="font-medium mt-3">Strategic planning, capital allocation, governance.</div>
+      </div>
+      <div class="agent-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <div class="text-[#C6A75B] text-sm tracking-widest">CFO AGENT</div>
+        <div class="font-medium mt-3">Financial modeling, treasury, Shariah purification tracking.</div>
+      </div>
+      <div class="agent-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <div class="text-[#C6A75B] text-sm tracking-widest">TRADE AGENT</div>
+        <div class="font-medium mt-3">Counterparty screening, contract structuring, logistics coordination.</div>
+      </div>
+      <div class="agent-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <div class="text-[#C6A75B] text-sm tracking-widest">AVIATION AGENT</div>
+        <div class="font-medium mt-3">Fleet analysis, regulatory navigation, leasing structures.</div>
+      </div>
+      <div class="agent-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <div class="text-[#C6A75B] text-sm tracking-widest">ENERGY AGENT</div>
+        <div class="font-medium mt-3">Asset evaluation, offtake agreements, project finance.</div>
+      </div>
+      <div class="agent-card border border-white/10 bg-[#0C3327] p-6 rounded-2xl">
+        <div class="text-[#C6A75B] text-sm tracking-widest">LEGAL AGENT</div>
+        <div class="font-medium mt-3">Entity formation, compliance, Shariah board liaison.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Trust first -->
+  <section class="max-w-7xl mx-auto px-6 py-20 border-t border-white/10 section">
+    <div class="border border-white/10 rounded-3xl p-10">
+      <div class="eyebrow mb-8">TRUST FIRST</div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+        <div><div class="font-medium mb-1">Stage 01</div>Character &amp; background verification</div>
+        <div><div class="font-medium mb-1">Stage 02</div>Shariah alignment review</div>
+        <div><div class="font-medium mb-1">Stage 03</div>Operational readiness audit</div>
+        <div><div class="font-medium mb-1">Stage 04</div>Ongoing governance &amp; reporting</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Amanah -->
+  <section id="amanah" class="max-w-7xl mx-auto px-6 py-20 border-t border-white/10 section">
+    <div class="flex items-center gap-3 mb-6">
+      <span class="px-4 py-1 text-xs tracking-[1.5px] border border-[#C6A75B] text-[#C6A75B] rounded-full">AMANAH</span>
+    </div>
+    
+    <h2 class="heading text-5xl tracking-[-1px] max-w-2xl">Organize community impact with the same discipline as your ventures.</h2>
+    
+    <div class="mt-8 flex flex-wrap gap-2">
+      <div class="px-4 py-1.5 text-sm border border-white/10 rounded-full">Clean water access</div>
+      <div class="px-4 py-1.5 text-sm border border-white/10 rounded-full">Education infrastructure</div>
+      <div class="px-4 py-1.5 text-sm border border-white/10 rounded-full">Healthcare clinics</div>
+      <div class="px-4 py-1.5 text-sm border border-white/10 rounded-full">Skills &amp; vocational training</div>
+      <div class="px-4 py-1.5 text-sm border border-white/10 rounded-full">Orphan care</div>
+      <div class="px-4 py-1.5 text-sm border border-white/10 rounded-full">Sustainable agriculture</div>
+      <div class="px-4 py-1.5 text-sm border border-white/10 rounded-full">Micro-enterprise support</div>
+      <div class="px-4 py-1.5 text-sm border border-white/10 rounded-full">+ 8 more</div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 mt-10">
+      <div class="border border-white/10 bg-[#0C3327] p-8 rounded-2xl">
+        <div class="font-medium">Project planning tools</div>
+        <div class="text-sm text-[#F3EEE1]/70 mt-2">Structured planning, milestone tracking, and transparent reporting for every Amanah project.</div>
+      </div>
+      <div class="border border-white/10 bg-[#0C3327] p-8 rounded-2xl">
+        <div class="font-medium">Impact verification</div>
+        <div class="text-sm text-[#F3EEE1]/70 mt-2">Independent verification and quarterly impact statements for all contributors.</div>
+      </div>
+    </div>
+
+    <div class="mt-10 text-xs text-[#F3EEE1]/60 max-w-2xl border-l-2 border-[#C6A75B] pl-5">
+      Amanah projects are community-led planning initiatives. Halaxis does not hold or manage charitable funds. All contributions are made directly to verified project partners.
+    </div>
+  </section>
+
+  <!-- 10. Waitlist -->
+  <section id="waitlist" class="max-w-xl mx-auto px-6 py-20 text-center section">
+    <div class="waitlist-glow border border-[#C6A75B]/30 rounded-3xl p-12 bg-[#0C3327]">
+      <div class="eyebrow mb-6 justify-center">INVITE-ONLY ACCESS</div>
+      <h2 class="heading text-4xl tracking-[-0.5px]">Ready to build?</h2>
+      <p class="mt-3 text-[#F3EEE1]/70">Applications are reviewed on a rolling basis. We respond within 10 business days.</p>
+      
+      <form class="mt-8 flex gap-3" onsubmit="event.preventDefault(); alert('Thank you. Your application has been received.');">
+        <input type="email" placeholder="Your work email" 
+               class="flex-1 bg-[#071E17] border border-white/20 rounded-full px-6 py-3 text-sm focus:outline-none focus:border-[#C6A75B]">
+        <button type="submit"
+                class="px-8 py-3 rounded-full bg-[#C6A75B] text-[#071E17] font-medium text-sm hover:bg-[#d4b87a] transition-colors">
+          Request access
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 11. Footer -->
+  <footer class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-12 text-xs text-[#F3EEE1]/50 flex flex-col md:flex-row md:items-center gap-y-4 justify-between">
+      <div>© Halaxis. All rights reserved.</div>
+      <div class="flex gap-x-6">
+        <a href="#" class="hover:text-[#F3EEE1]">Privacy</a>
+        <a href="#" class="hover:text-[#F3EEE1]">Terms</a>
+        <a href="#" class="hover:text-[#F3EEE1]">Compliance</a>
+      </div>
+    </div>
+    
+    <div class="border-t border-white/10 py-6 text-[10px] text-center text-[#F3EEE1]/40 max-w-4xl mx-auto px-6 leading-relaxed">
+      Halaxis is a private platform for planning and operating halal businesses. It does not offer securities, accept investment funds, or act as a charitable organization. 
+      All membership fees are for platform access and operational tooling only. Nothing on this site constitutes an offer to sell securities or a solicitation to invest.
+    </div>
+  </footer>
+
+  <script>
+    // Tailwind script
+    function initializeTailwind() {
+      document.documentElement.style.setProperty('--accent-gold', '#C6A75B');
+    }
+    
+    // Scroll fade-in
+    function initScrollAnimations() {
+      const sections = document.querySelectorAll('.section');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      
+      sections.forEach(section => observer.observe(section));
+    }
+    
+    // Reduced motion respect
+    function respectReducedMotion() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.star-rotate').forEach(el => {
+          el.style.animation = 'none';
+        });
+      }
+    }
+    
+    window.onload = function() {
+      initializeTailwind();
+      initScrollAnimations();
+      respectReducedMotion();
+    };
+  </script>
+</body>
+</html>
