@@ -1,0 +1,74 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+
+import { createServerSupabaseClient } from "@/lib/supabase/server";
+
+const emailSchema = z.object({
+  email: z.string().email().toLowerCase(),
+});
+
+/**
+ * POST /api/auth/signup
+ * Send a magic-link signup email.
+ * Not creating accounts; just sending passwordless links.
+ */
+export async function POST(request: Request) {
+  let json: unknown;
+  try {
+    json = await request.json();
+  } catch {
+    return NextResponse.json(
+      { error: "Invalid JSON body." },
+      { status: 400 },
+    );
+  }
+
+  const parsed = emailSchema.safeParse(json);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Email is required and must be valid." },
+      { status: 400 },
+    );
+  }
+
+  const supabase = createServerSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json(
+      { error: "Authentication is not configured." },
+      { status: 503 },
+    );
+  }
+
+  const { email } = parsed.data;
+
+  try {
+    // Send magic link (no return_to needed for now; callback will handle redirect)
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: true,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || "https://halaxis.dev"}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      console.error("[auth/signup] signInWithOtp error:", error);
+      return NextResponse.json(
+        { error: error.message || "Failed to send magic link." },
+        { status: 400 },
+      );
+    }
+
+    return NextResponse.json(
+      {
+        message: `Magic link sent to ${email}. Check your email to log in.`,
+        email,
+      },
+      { status: 200 },
+    );
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Internal server error.";
+    console.error("[auth/signup] error:", err);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
