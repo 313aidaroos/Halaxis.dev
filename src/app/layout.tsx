@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
 
 import { ChatWidget } from "@/components/chat-widget";
 import { Providers } from "@/components/providers";
@@ -8,19 +7,6 @@ import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
-
-const sans = Source_Sans_3({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const serif = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-serif",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -74,8 +60,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${sans.variable} ${serif.variable}`}>
-      <body className="font-sans">
+    <html lang="en" className="dark">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-mono" style={{ fontFamily: "'Special Elite', monospace" }}>
         <Providers>
           <a
             href="#main"
