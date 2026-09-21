@@ -1,5 +1,6 @@
 "use client";
 
+import { Brand } from "@/components/brand";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,43 +17,26 @@ import {
 import { navItems, siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-function Mark() {
-  return (
-    <span className="flex items-center gap-2.5">
-      <span
-        aria-hidden
-        className="grid h-8 w-8 place-items-center rounded-md border border-gold/50 bg-gold/10"
-      >
-        <svg viewBox="0 0 32 32" className="h-5 w-5 text-gold">
-          <path
-            fill="currentColor"
-            d="M16 3.5 28 10v12L16 28.5 4 22V10L16 3.5Zm0 3.2L7.4 11.2v9.6L16 25.3l8.6-4.5v-9.6L16 6.7Zm0 3.6 6 3.1v6.2l-6 3.1-6-3.1v-6.2l6-3.1Z"
-          />
-        </svg>
-      </span>
-      <span className="font-serif text-lg tracking-wide text-foreground">
-        {siteConfig.name}
-      </span>
-    </span>
-  );
-}
-
 export function SiteHeader() {
   const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md">
-      <div className="container flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <Mark />
+      <div className="container flex h-20 items-center justify-between gap-4">
+        <Link
+          href="/"
+          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <Brand />
           <span className="sr-only">{siteConfig.name} home</span>
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-6 xl:flex" aria-label="Primary">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              aria-current={pathname === item.href ? "page" : undefined}
               className={cn(
                 "text-sm text-muted-foreground transition-colors hover:text-foreground",
                 pathname === item.href && "text-gold",
@@ -63,15 +47,26 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden xl:flex items-center gap-3">
+          <Link
+            href="/auth/login"
+            className="text-sm text-foreground px-3 py-2"
+          >
+            Sign in
+          </Link>
           <Button asChild variant="gold" size="sm">
-            <Link href="/contact">Join interest list</Link>
+            <Link href="/auth/login">Get started</Link>
           </Button>
         </div>
 
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="md:hidden" aria-label="Open menu">
+            <Button
+              variant="outline"
+              size="icon"
+              className="xl:hidden"
+              aria-label="Open menu"
+            >
               <Menu />
             </Button>
           </SheetTrigger>
@@ -84,6 +79,7 @@ export function SiteHeader() {
                 <SheetClose asChild key={item.href}>
                   <Link
                     href={item.href}
+                    aria-current={pathname === item.href ? "page" : undefined}
                     className={cn(
                       "text-base text-muted-foreground",
                       pathname === item.href && "text-gold",
@@ -95,7 +91,7 @@ export function SiteHeader() {
               ))}
               <SheetClose asChild>
                 <Button asChild variant="gold" className="mt-2">
-                  <Link href="/contact">Join interest list</Link>
+                  <Link href="/auth/login">Get started</Link>
                 </Button>
               </SheetClose>
             </nav>

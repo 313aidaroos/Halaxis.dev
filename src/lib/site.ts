@@ -14,11 +14,12 @@ export const siteConfig = {
 } as const;
 
 export const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/strategy", label: "Vision" },
   { href: "/screen", label: "Screen" },
+  { href: "/compliance", label: "Principles" },
+  { href: "/resources", label: "Resources" },
   { href: "/about", label: "About" },
-  { href: "/compliance", label: "Sharia & Compliance" },
-  { href: "/strategy", label: "Strategy" },
-  { href: "/contact", label: "Interest" },
 ] as const;
 
 export const legalNavItems = [

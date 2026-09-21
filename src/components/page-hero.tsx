@@ -10,7 +10,7 @@ export function PageHero({
   description: string;
 }) {
   return (
-    <section className="border-b border-border bg-card/30">
+    <section className="border-b border-border bg-card/30 geometric-grid">
       <div className="container max-w-3xl py-14 md:py-20">
         {eyebrow ? (
           <Badge variant="gold" className="mb-4">

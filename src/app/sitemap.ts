@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/site";
 const paths = [
   "",
   "/screen",
+  "/resources",
   "/about",
   "/compliance",
   "/strategy",

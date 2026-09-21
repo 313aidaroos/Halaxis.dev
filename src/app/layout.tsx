@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b1424",
+  themeColor: "#230b12",
   width: "device-width",
   initialScale: 1,
 };
@@ -61,13 +61,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="font-mono" style={{ fontFamily: "'Special Elite', monospace" }}>
+      <body>
         <Providers>
           <a
             href="#main"

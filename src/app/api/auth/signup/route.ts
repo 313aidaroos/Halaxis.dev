@@ -47,7 +47,7 @@ export async function POST(request: Request) {
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || "https://halaxis.dev"}/auth/callback`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || "https://halaxis.dev"}/api/auth/callback`,
       },
     });
 

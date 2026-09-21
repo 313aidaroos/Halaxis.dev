@@ -1,187 +1,314 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
-  Compass,
-  Landmark,
-  Scale,
+  ArrowRight,
+  BookOpen,
+  Building2,
+  Globe2,
+  Heart,
   ShieldCheck,
   Sparkles,
+  Users,
+  Compass,
+  Moon,
+  Sprout,
 } from "lucide-react";
-
+import { Brand } from "@/components/brand";
 import { Faq } from "@/components/faq";
-import { LegalBanner } from "@/components/legal-banner";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { siteConfig } from "@/lib/site";
 
-const pillars = [
+const pathways = [
   {
-    title: "Faith-aligned screens",
+    title: "Explore the vision",
+    description:
+      "Discover a more purposeful approach to capital and opportunity.",
+    href: "/strategy",
+    image: "city",
+    icon: Building2,
+    label: "THE VISION",
+  },
+  {
+    title: "Screen with confidence",
+    description:
+      "Explore our Shariah screening tool and understand the methodology.",
+    href: "/screen",
+    image: "arch",
     icon: ShieldCheck,
-    body: "The intended program excludes riba-based instruments, prohibited sectors, and structures that fail a conservative reading of gharar and maysir. Formal scholar review is pending.",
+    label: "THE TOOLS",
   },
   {
-    title: "Institutional discipline",
-    icon: Landmark,
-    body: "Halaxis is designed as a professional investment platform — not a retail trading app. Process, documentation, and counsel come before any capital raise.",
+    title: "Connect with Halaxis",
+    description: "Express your interest and be part of the conversation.",
+    href: "/contact",
+    image: "community",
+    icon: Users,
+    label: "THE PEOPLE",
   },
   {
-    title: "No invented track record",
-    icon: Scale,
-    body: "We do not publish performance, AUM, or forecasts on this site. Any future figures will appear only in counsel-reviewed materials, if at all.",
+    title: "Learn & grow",
+    description: "Understand our principles, approach, and commitments.",
+    href: "/resources",
+    image: "library",
+    icon: BookOpen,
+    label: "THE KNOWLEDGE",
   },
 ];
-
-const steps = [
+const principles = [
   {
-    title: "Express interest",
-    body: "Accredited investors (or equivalent) may join the list. This is not a subscription and does not reserve an allocation.",
+    icon: ShieldCheck,
+    title: "Faith-led",
+    text: "Principles at our foundation",
   },
-  {
-    title: "Counsel & filings",
-    body: "Securities, tax, and Sharia counsel review offering structure, disclosures, and any required registrations before any solicitation.",
-  },
-  {
-    title: "Documented invitation",
-    body: "If a lawful path exists, qualified persons would receive counsel-reviewed documents — never a checkout link from this marketing site by default.",
-  },
-  {
-    title: "Onboarding (future)",
-    body: "Payment and fund onboarding stay behind ENABLE_PAYMENTS. They remain off until compliance gates are cleared.",
-  },
+  { icon: Compass, title: "Purposeful", text: "A considered approach" },
+  { icon: Globe2, title: "Connected", text: "A shared global outlook" },
+  { icon: Heart, title: "Transparent", text: "Clarity at every step" },
 ];
 
 export default function HomePage() {
   return (
     <>
-      <section className="relative overflow-hidden geometric-grid">
-        <div className="container grid gap-12 py-16 md:grid-cols-[1.15fr_0.85fr] md:py-24">
-          <div>
-            <Badge variant="gold">In formation · not accepting investments</Badge>
-            <h1 className="mt-5 font-serif text-4xl leading-[1.1] text-foreground md:text-6xl">
-              Halal capital, stewarded with discipline.
+      <section className="home-hero">
+        <Image
+          src="/images/halaxis-arch.png"
+          alt="Ornate Islamic arch overlooking a sunlit city of domes and minarets"
+          fill
+          priority
+          sizes="100vw"
+          className="hero-image"
+        />
+        <div className="hero-shade" />
+        <div className="container hero-content">
+          <div className="hero-copy">
+            <p className="eyebrow rose">PEOPLE. CAPITAL. IDEAS. IMPACT.</p>
+            <h1>
+              Build Together.
+              <br />
+              <em>
+                A Brighter
+                <br className="desktop-break" /> Tomorrow.
+              </em>
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              {siteConfig.name} is a Halal- and Sharia-aligned investment
-              platform being built by {siteConfig.principal} through{" "}
-              {siteConfig.legalName}. Formal scholar review and a published
-              methodology are pending. This site is for education and
-              accredited-investor interest only.
+            <p className="hero-description">
+              A shared vision. A principled foundation. Halaxis is building a
+              space for faith-aligned capital, meaningful connections, and a
+              more purposeful future.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild variant="gold" size="lg">
-                <Link href="/screen">Open the Shariah screen</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/contact">Join the interest list</Link>
-              </Button>
+            <div className="hero-actions">
+              <Link className="gold-button" href="/screen">
+                Explore the platform <ArrowRight size={18} />
+              </Link>
+              <Link className="outline-button" href="/about">
+                Our story <ArrowRight size={16} />
+              </Link>
+            </div>
+            <div className="hero-values">
+              <span>
+                <Sparkles /> Purposeful
+                <br />
+                innovation
+              </span>
+              <span>
+                <Globe2 /> Global
+                <br />
+                perspective
+              </span>
+              <span>
+                <Sprout /> Ethical
+                <br />
+                growth
+              </span>
             </div>
           </div>
-          <div className="space-y-4">
-            <LegalBanner compact />
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Compass className="h-4 w-4 text-gold" />
-                  High-level mandate
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm text-muted-foreground">
-                <p>
-                  Screen listed and private exposures for Sharia compatibility.
-                  Prefer real-economy participation over leveraged financial
-                  engineering. Avoid interest-bearing cash structures where a
-                  compliant alternative can be designed.
-                </p>
-                <p>
-                  This is a statement of intent — not a prospectus, not a pitch
-                  book, and not a promise of strategy or results.
-                </p>
-              </CardContent>
-            </Card>
+          <div className="hero-quote">
+            <p lang="ar" dir="rtl">
+              وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ
+            </p>
+            <blockquote>
+              “And cooperate in righteousness
+              <br />
+              and piety.”
+            </blockquote>
+            <span>QUR’AN 5:2</span>
+          </div>
+          <div className="hero-side" aria-hidden="true">
+            FAITH
+            <br />
+            PURPOSE
+            <br />
+            CONNECTION<span>✦</span>A BRIGHTER
+            <br />
+            TOMORROW
           </div>
         </div>
       </section>
-
-      <section className="border-t border-border">
-        <div className="container py-16 md:py-20">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-gold">
-            Positioning
-          </p>
-          <h2 className="mt-3 max-w-2xl font-serif text-3xl md:text-4xl">
-            Islamic finance principles, institutional posture.
-          </h2>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {pillars.map((pillar) => (
-              <Card key={pillar.title}>
-                <CardHeader>
-                  <pillar.icon className="h-5 w-5 text-primary" />
-                  <CardTitle className="text-lg">{pillar.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm leading-relaxed text-muted-foreground">
-                  {pillar.body}
-                </CardContent>
-              </Card>
+      <section className="principles-wrap" aria-label="Our principles">
+        <div className="container">
+          <div className="principles ornate-panel">
+            {principles.map(({ icon: Icon, title, text }) => (
+              <div key={title}>
+                <Icon />
+                <span>
+                  <strong>{title}</strong>
+                  <small>{text}</small>
+                </span>
+              </div>
             ))}
           </div>
         </div>
       </section>
-
-      <section className="border-t border-border bg-card/25">
-        <div className="container py-16 md:py-20">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-gold">
-            How it works
-          </p>
-          <h2 className="mt-3 font-serif text-3xl md:text-4xl">
-            Interest first. Capital later — if ever lawful.
-          </h2>
-          <ol className="mt-10 grid gap-5 md:grid-cols-2">
-            {steps.map((step, index) => (
-              <li key={step.title} className="rounded-xl border border-border bg-card p-6">
-                <p className="text-xs uppercase tracking-[0.16em] text-gold">
-                  0{index + 1}
-                </p>
-                <h3 className="mt-2 font-serif text-xl">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {step.body}
-                </p>
-              </li>
-            ))}
-          </ol>
+      <section className="pathways cream-section" id="explore">
+        <div className="container">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">YOUR NEXT CHAPTER</p>
+              <h2>Find your way forward.</h2>
+            </div>
+            <p>
+              Big ideas begin with a first step.
+              <br />
+              Make yours a meaningful one.
+            </p>
+          </div>
+          <div className="pathway-grid">
+            {pathways.map(
+              ({ title, description, href, image, icon: Icon, label }) => (
+                <Link href={href} className="pathway-card" key={href}>
+                  <div className="pathway-image">
+                    <Image
+                      src={
+                        image === "arch"
+                          ? "/images/halaxis-arch.png"
+                          : `/images/${image}.jpg`
+                      }
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 25vw"
+                    />
+                    <span>{label}</span>
+                  </div>
+                  <div className="pathway-body">
+                    <Icon className="pathway-icon" />
+                    <h3>{title}</h3>
+                    <p>{description}</p>
+                    <span className="round-arrow">
+                      <ArrowRight size={18} />
+                    </span>
+                  </div>
+                </Link>
+              ),
+            )}
+          </div>
         </div>
       </section>
-
-      <section className="border-t border-border">
-        <div className="container grid gap-10 py-16 md:grid-cols-[0.9fr_1.1fr] md:py-20">
+      <section className="movement geometric-grid">
+        <div className="container movement-grid">
+          <div className="movement-emblem" aria-hidden="true">
+            <Brand large />
+            <span>
+              ROOTED IN FAITH.
+              <br />
+              OPEN TO POSSIBILITY.
+            </span>
+          </div>
+          <div className="movement-copy">
+            <p className="eyebrow rose">A SHARED SENSE OF PURPOSE</p>
+            <h2>
+              More than a platform.
+              <br />
+              <em>A principled beginning.</em>
+            </h2>
+            <p>
+              We believe progress begins with trust. Halaxis brings a
+              faith-aligned perspective to capital, connecting thoughtful people
+              with the tools and knowledge to move forward.
+            </p>
+            <p>
+              Our investment platform is in formation. Explore the screening
+              tool today, learn about our approach, and help shape what comes
+              next.
+            </p>
+            <div className="movement-values">
+              <span>
+                <Moon />
+                Faith-aligned
+              </span>
+              <span>
+                <Users />
+                People-centered
+              </span>
+              <span>
+                <Sparkles />
+                Technology-enabled
+              </span>
+            </div>
+          </div>
+          <aside className="vision-note ornate-panel">
+            <span className="quote-mark">“</span>
+            <p>
+              A stronger community.
+              <br />A brighter world.
+              <br />
+              <em>Built together.</em>
+            </p>
+            <span className="ornament">— ✦ —</span>
+            <Link href="/about">
+              Discover our vision <ArrowRight size={15} />
+            </Link>
+          </aside>
+        </div>
+      </section>
+      <section className="cta-section">
+        <div className="container">
+          <div className="cta-panel ornate-panel">
+            <div>
+              <p className="eyebrow">THE FUTURE STARTS WITH A CONVERSATION</p>
+              <h2>Ready to take the next step?</h2>
+              <p>Explore the tools. Understand the vision. Stay connected.</p>
+            </div>
+            <div className="hero-actions">
+              <Link href="/auth/login" className="outline-button">
+                Sign in
+              </Link>
+              <Link href="/contact" className="gold-button">
+                Express interest <ArrowRight size={17} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="cream-section audience">
+        <div className="container">
+          <p className="eyebrow">BUILT WITH A SHARED FUTURE IN MIND</p>
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.18em] text-gold">
-              Questions
-            </p>
-            <h2 className="mt-3 font-serif text-3xl md:text-4xl">FAQ</h2>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Conservative answers. If a topic needs counsel, we say so.
-            </p>
+            {[
+              { icon: Building2, text: "Entrepreneurs" },
+              { icon: Compass, text: "Investors" },
+              { icon: Users, text: "Communities" },
+              { icon: BookOpen, text: "Learners" },
+              { icon: Heart, text: "Changemakers" },
+            ].map(({ icon: Icon, text }) => (
+              <span key={text}>
+                <Icon />
+                {text}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="home-faq">
+        <div className="container faq-grid">
+          <div>
+            <p className="eyebrow">CLARITY COMES FIRST</p>
+            <h2>
+              A few things
+              <br />
+              <em>worth knowing.</em>
+            </h2>
+            <p>Where we are today, and what comes next.</p>
+            <Link href="/compliance" className="text-link">
+              Our principles & commitments <ArrowRight size={16} />
+            </Link>
           </div>
           <Faq />
-        </div>
-      </section>
-
-      <section className="border-t border-border">
-        <div className="container flex flex-col items-start gap-5 py-16 md:flex-row md:items-center md:justify-between md:py-20">
-          <div className="max-w-xl">
-            <h2 className="flex items-center gap-2 font-serif text-3xl">
-              <Sparkles className="h-5 w-5 text-gold" />
-              Stay informed
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Join the accredited-investor interest list. We will not treat a
-              form submission as a commitment, and we will not ask for wires
-              from this website.
-            </p>
-          </div>
-          <Button asChild variant="gold" size="lg">
-            <Link href="/contact">Submit interest</Link>
-          </Button>
         </div>
       </section>
     </>
