@@ -20,7 +20,8 @@ export async function GET(request: Request) {
     authorized =
       Buffer.byteLength(supplied) === Buffer.byteLength(expected) &&
       timingSafeEqual(Buffer.from(supplied), Buffer.from(expected));
-  } else if (/^Bearer [a-f0-9]{64}$/.test(supplied)) {
+  }
+  if (!authorized && /^Bearer [a-f0-9]{64}$/.test(supplied)) {
     const { data, error } = await db.rpc("verify_agent_worker_token", {
       supplied: supplied.slice(7),
     });
