@@ -75,41 +75,14 @@
   position: relative;
   display: grid;
   place-items: center;
-  height: 58px;
-  width: 49px;
-  color: #e5bd7c;
-  filter: drop-shadow(0 2px 6px #8c5b2833);
+  height: 60px;
+  width: 68px;
+  flex-shrink: 0;
 }
-.brand-mark span {
-  font:
-    70px/0.8 Georgia,
-    serif;
-  background: linear-gradient(
-    110deg,
-    #987148,
-    #fff0ca 45%,
-    #b98844 58%,
-    #ffe8b2
-  );
-  color: transparent;
-  background-clip: text;
-}
-.brand-mark:after {
-  content: "";
-  position: absolute;
-  width: 48px;
-  height: 16px;
-  border-bottom: 7px solid #8c223a;
-  border-top: 2px solid #ebc48e;
-  border-radius: 50%;
-  transform: rotate(34deg);
-  top: 25px;
-}
-.brand-mark i {
-  position: absolute;
-  top: -8px;
-  right: 8px;
-  font-size: 18px;
+.brand-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .brand-type {
   font:
