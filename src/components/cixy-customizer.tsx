@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   CIXY_EQUIPPED_STORAGE_KEY,
+  CIXY_FACE,
   CIXY_SLOTS,
   defaultEquipped,
   equippedOption,
@@ -29,7 +30,7 @@ function panelFromLocation(): CixyPanel {
 export function CixyCustomizer() {
   const buyIxisHref = apixisWalletBuyUrl();
   const [panel, setPanel] = useState<CixyPanel>("wardrobe");
-  const [slot, setSlot] = useState<CixySlotId>("skin");
+  const [slot, setSlot] = useState<CixySlotId>("hair");
   const [equipped, setEquipped] = useState<CixyEquipped>(defaultEquipped);
   const [ready, setReady] = useState(false);
 
@@ -86,12 +87,17 @@ export function CixyCustomizer() {
             <p className="text-[11px] uppercase tracking-[0.22em] text-gold">Art pending</p>
             <p className="font-serif text-2xl text-foreground">Portrait coming soon</p>
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-              One Cixy. Real PNG art is not in the repo yet, so this frame stays empty.
+              One Cixy, same face everywhere. PNG art is not in the repo yet, so this frame stays
+              empty.
             </p>
           </div>
           <figcaption className="space-y-2 border-t border-border px-4 py-4 text-sm">
             <p className="text-xs uppercase tracking-wide text-gold">Equipped</p>
             <ul className="space-y-1 text-muted-foreground">
+              <li className="flex justify-between gap-3">
+                <span>Face</span>
+                <span className="text-foreground">{CIXY_FACE.label}</span>
+              </li>
               {CIXY_SLOTS.map((item) => {
                 const option = equippedOption(equipped, item.id);
                 return (
@@ -102,6 +108,7 @@ export function CixyCustomizer() {
                 );
               })}
             </ul>
+            <p className="text-xs text-muted-foreground">{CIXY_FACE.detail}</p>
           </figcaption>
         </figure>
         <p className="text-sm text-muted-foreground">
@@ -151,8 +158,8 @@ export function CixyCustomizer() {
             <div>
               <h2 className="font-serif text-2xl">Wardrobe</h2>
               <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-                Inventory on Halaxis. Essentials are owned. Paid looks are listed here and stay
-                unowned until Apixis Wallet prices them.
+                Inventory on Halaxis for hair, outfit, and office. The face stays the signature.
+                Essentials are owned. Paid looks stay unowned until Apixis Wallet prices them.
               </p>
             </div>
             {CIXY_SLOTS.map((item) => (

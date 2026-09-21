@@ -1,31 +1,21 @@
 /**
- * Cixy wardrobe catalog for the Halaxis customizer.
+ * Combo A wardrobe for the one signature Cixy.
  *
- * Essentials are included and can be equipped in preview.
- * Paid looks stay unowned and unpriced until Apixis Wallet lists them.
- * Do not invent Ixis amounts here.
+ * The face is fixed. Cosmetics are hair, outfit, and office only.
+ * Essentials are owned and can be equipped. Paid looks stay unowned
+ * and unpriced until Apixis Wallet lists them. Do not invent Ixis amounts.
  */
+
+export const CIXY_FACE = {
+  label: "Signature",
+  detail: "Same face everywhere. Skin and eyes are not cosmetics.",
+} as const;
 
 export const CIXY_SLOTS = [
   {
-    id: "skin",
-    label: "Skin",
-    blurb: "Included complexions. Skin is not a paid cosmetic.",
-  },
-  {
-    id: "hairStyle",
-    label: "Hair style",
-    blurb: "Modest, professional styles.",
-  },
-  {
-    id: "hairColor",
-    label: "Hair color",
-    blurb: "Natural colors for the equipped style.",
-  },
-  {
-    id: "eyes",
-    label: "Eyes",
-    blurb: "A calm, professional set.",
+    id: "hair",
+    label: "Hair",
+    blurb: "Modest styles on the signature face.",
   },
   {
     id: "outfit",
@@ -57,115 +47,38 @@ export const CIXY_EQUIPPED_STORAGE_KEY = "halaxis.cixy.equipped";
 
 export const CIXY_OPTIONS: readonly CixyOption[] = [
   {
-    id: "olive",
-    slot: "skin",
-    label: "Warm olive",
-    detail: "Default complexion.",
-    access: "essential",
-  },
-  {
-    id: "wheat",
-    slot: "skin",
-    label: "Light wheat",
-    detail: "Included.",
-    access: "essential",
-  },
-  {
-    id: "sand",
-    slot: "skin",
-    label: "Medium sand",
-    detail: "Included.",
-    access: "essential",
-  },
-  {
-    id: "deep",
-    slot: "skin",
-    label: "Deep brown",
-    detail: "Included.",
-    access: "essential",
-  },
-  {
     id: "hijab-soft",
-    slot: "hairStyle",
+    slot: "hair",
     label: "Soft hijab",
-    detail: "Face clear, wrap tucked, work-ready.",
+    detail: "Signature hair. Face clear, wrap tucked, work-ready.",
     access: "essential",
   },
   {
     id: "khimar",
-    slot: "hairStyle",
+    slot: "hair",
     label: "Khimar",
     detail: "Longer wrap. Not priced yet.",
     access: "paid",
   },
   {
     id: "structured-wrap",
-    slot: "hairStyle",
+    slot: "hair",
     label: "Structured wrap",
     detail: "Tailored fold. Not priced yet.",
     access: "paid",
   },
   {
     id: "side-drape",
-    slot: "hairStyle",
+    slot: "hair",
     label: "Side drape",
     detail: "Quiet drape over one shoulder. Not priced yet.",
-    access: "paid",
-  },
-  {
-    id: "espresso",
-    slot: "hairColor",
-    label: "Espresso",
-    detail: "Default.",
-    access: "essential",
-  },
-  {
-    id: "soft-black",
-    slot: "hairColor",
-    label: "Soft black",
-    detail: "Not priced yet.",
-    access: "paid",
-  },
-  {
-    id: "chestnut",
-    slot: "hairColor",
-    label: "Chestnut",
-    detail: "Not priced yet.",
-    access: "paid",
-  },
-  {
-    id: "auburn",
-    slot: "hairColor",
-    label: "Auburn",
-    detail: "Not priced yet.",
-    access: "paid",
-  },
-  {
-    id: "calm-brown",
-    slot: "eyes",
-    label: "Calm brown",
-    detail: "Default.",
-    access: "essential",
-  },
-  {
-    id: "warm-hazel",
-    slot: "eyes",
-    label: "Warm hazel",
-    detail: "Not priced yet.",
-    access: "paid",
-  },
-  {
-    id: "soft-amber",
-    slot: "eyes",
-    label: "Soft amber",
-    detail: "Not priced yet.",
     access: "paid",
   },
   {
     id: "charcoal-abaya",
     slot: "outfit",
     label: "Charcoal abaya",
-    detail: "Long coat, quiet gold line. Default.",
+    detail: "Signature outfit. Long coat, quiet gold line.",
     access: "essential",
   },
   {
@@ -193,7 +106,7 @@ export const CIXY_OPTIONS: readonly CixyOption[] = [
     id: "quiet-study",
     slot: "office",
     label: "Quiet study",
-    detail: "Default desk and shelves.",
+    detail: "Signature office. Desk and shelves.",
     access: "essential",
   },
   {
@@ -246,14 +159,23 @@ export function defaultEquipped(): CixyEquipped {
   return equipped;
 }
 
-/** Keep only owned essentials. Paid or unknown ids fall back to the default. */
+/**
+ * Keep only owned essentials for hair, outfit, and office.
+ * Older saves used `hairStyle`. Skin, eyes, and hair color are ignored.
+ */
 export function sanitizeEquipped(value: unknown): CixyEquipped {
   const defaults = defaultEquipped();
   if (!value || typeof value !== "object") return defaults;
   const record = value as Record<string, unknown>;
   const next: CixyEquipped = { ...defaults };
+  const rawHair = record.hair ?? record.hairStyle;
+  const raw: Record<CixySlotId, unknown> = {
+    hair: rawHair,
+    outfit: record.outfit,
+    office: record.office,
+  };
   for (const slot of CIXY_SLOTS) {
-    const id = record[slot.id];
+    const id = raw[slot.id];
     if (typeof id !== "string") continue;
     const option = findOption(slot.id, id);
     if (option?.access === "essential") next[slot.id] = option.id;

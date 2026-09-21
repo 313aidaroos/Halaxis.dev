@@ -7,7 +7,7 @@ import { PageHero } from "@/components/page-hero";
 export const metadata: Metadata = {
   title: "Cixy",
   description:
-    "Cixy’s wardrobe on Halaxis, and Customize to equip a look. Essentials are owned. Paid cosmetics are coming soon. Ixis is bought only in Apixis Wallet.",
+    "One Cixy. Wardrobe and Customize change hair, outfit, and office only. The face stays fixed. Essentials are owned. Ixis is bought only in Apixis Wallet.",
 };
 
 export default function CixyPage() {
@@ -16,7 +16,7 @@ export default function CixyPage() {
       <PageHero
         eyebrow="Cixy"
         title="One Cixy"
-        description="Wardrobe is her inventory on Halaxis. Customize equips a look from what she owns. Essentials are included. Paid looks are not priced yet."
+        description="Same face in chat, wardrobe, and Customize. Only hair, outfit, and office change. Essentials are included. Paid looks are not priced yet."
       />
       <div className="container space-y-8 py-12 md:py-16">
         <LegalBanner compact />
@@ -26,7 +26,7 @@ export default function CixyPage() {
             wardrobe, then you equip them in Customize. This page does not charge a card.
           </p>
           <p>
-            Cixy stays one educational assistant. A wardrobe change does not change her answers,
+            Cixy stays one educational assistant, with one face. A wardrobe change does not change her answers,
             and it is not a request for investment. Halaxis does not claim a Sharia certification
             for any look. Paid slots say coming soon and show no Ixis amount until Wallet prices
             them.
