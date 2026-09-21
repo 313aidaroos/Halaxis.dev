@@ -135,7 +135,7 @@ export function ChatWidget() {
       ) : null}
       <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
         <Link
-          href="/cixy"
+          href="/cixy#customize"
           className="rounded-md border border-gold/30 bg-card/90 px-3 py-2 text-xs text-gold shadow-lg backdrop-blur-md hover:bg-card"
         >
           Customize Cixy

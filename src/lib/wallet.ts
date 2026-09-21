@@ -9,8 +9,8 @@ import { siteConfig } from "@/lib/site";
  * `product` is the query key. Wallet also accepts `app` as an alias;
  * Halaxis sends `product` only. The old `origin` query is retired.
  *
- * Return path is `/cixy` (Customize Cixy), chosen over `/contact` so a
- * finished pack lands on the wardrobe. Header Buy Ixis, the contact
+ * Return path is `/cixy` (Wardrobe tab), chosen over `/contact` so a
+ * finished pack lands on Cixy’s inventory. Header Buy Ixis, the contact
  * PaymentPanel, and the customizer all use `apixisWalletBuyUrl()`.
  *
  * Allowlist gap (Wallet repo, not this app): `halaxis` is not a known

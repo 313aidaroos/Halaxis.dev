@@ -261,6 +261,10 @@ export function sanitizeEquipped(value: unknown): CixyEquipped {
   return next;
 }
 
+export function isOwned(option: CixyOption): boolean {
+  return option.access === "essential";
+}
+
 export function equippedOption(equipped: CixyEquipped, slot: CixySlotId): CixyOption {
   const selected = findOption(slot, equipped[slot]);
   if (selected) return selected;
