@@ -10,6 +10,10 @@ export function createAdminSupabaseClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     {
+      global: {
+        // Queue claims and private state must never be cached or request-deduplicated.
+        fetch: (input, init) => fetch(input, { ...init, cache: "no-store", signal: init?.signal ?? AbortSignal.timeout(20000) }),
+      },
       auth: {
         persistSession: false,
         autoRefreshToken: false,

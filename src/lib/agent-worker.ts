@@ -120,8 +120,9 @@ export async function runAgentJob(jobId?: string, ownerId?: string) {
       "[agent-worker]",
       error instanceof Error ? error.message : "Worker failure",
     );
-    const message =
-      "Agent run could not complete. Check provider configuration or retry later. No tasks or purchases were executed.";
+    const status = typeof error === "object" && error !== null && "status" in error ? Number(error.status) : 0;
+    const category = status === 401 || status === 403 ? `AI provider credentials were rejected (${status}).` : status === 404 ? "The configured AI model is unavailable (404)." : status === 429 ? "The AI provider quota or rate limit was reached (429)." : status === 400 ? "The AI provider rejected its configured request (400)." : error instanceof SyntaxError || (error instanceof Error && error.name === "ZodError") ? "The AI response did not match the required brief format." : error instanceof Error && error.message.includes("venture context") ? "The venture context could not be loaded." : "Agent processing or persistence failed.";
+    const message = category + " No purchases or external actions occurred. Retry after resolving the issue.";
     await db.rpc("finish_agent_job", {
       job: job.id,
       token: job.lease_token,

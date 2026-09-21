@@ -51,5 +51,24 @@ begin
  if public.finish_agent_job(j.id,j.lease_token,'{}') then raise exception 'FAIL: duplicate output accepted';end if;
  if (select count(*) from public.agent_contributions where job_id=j.id)<>1 then raise exception 'FAIL: contribution missing';end if;
 end;$$;
-select 'PASS: membership isolation, write authorization, fixed electorate, unique votes, ties, finality, commitments, worker permissions, queue deduplication and lease idempotency' as result;
+do $$
+declare v uuid:=current_setting('test.venture')::uuid; p uuid; i integer;
+begin
+ perform set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000001',true);
+ perform public.venture_action('propose',jsonb_build_object('venture_id',v,'title','Approve research','details','Allocate time to research a feasible harbor plan','days',1));
+ select id into p from public.venture_proposals where venture_id=v and title='Approve research';
+ perform public.venture_action('vote',jsonb_build_object('venture_id',v,'proposal_id',p,'choice',true));
+ perform set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000002',true);
+ perform public.venture_action('vote',jsonb_build_object('venture_id',v,'proposal_id',p,'choice',true));
+ perform set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000003',true);
+ perform public.venture_action('vote',jsonb_build_object('venture_id',v,'proposal_id',p,'choice',false));
+ if (select status from public.venture_proposals where id=p)<>'approved' then raise exception 'FAIL: strict majority rejected';end if;
+ perform set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000001',true);
+ perform public.venture_action('save_agent','{"name":"Test One","mission":"Build a community harbor","skills":"planning","autopilot":true}');
+ for i in 1..12 loop perform public.venture_action('create_venture',jsonb_build_object('title','Schedule test '||i,'description','Temporary scheduling quota test for a venture'));end loop;
+ perform public.schedule_agent_work();perform public.schedule_agent_work();
+ if (select count(*) from public.agent_jobs where owner_id='11111111-1000-4000-8000-000000000001')<>10 then raise exception 'FAIL: scheduler daily quota';end if;
+ if public.verify_agent_worker_token(repeat('0',64)) then raise exception 'FAIL: invalid scheduler credential';end if;
+end;$$;
+select 'PASS: membership isolation, write authorization, fixed electorate, unique votes, ties, finality, commitments, worker permissions, queue deduplication and lease idempotency, majority approval and scheduled daily quotas' as result;
 rollback;

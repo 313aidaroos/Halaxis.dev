@@ -806,7 +806,7 @@ export function VentureWorkspace({ ventureId }: { ventureId?: string }) {
                           <section className="space-y-4">
                             <h2 className="text-3xl">Proposals & decisions</h2>
                             <p className="text-xs text-muted-foreground">
-                              One person, one vote. More than half of all
+                              One member account, one vote. More than half of all
                               eligible members must vote yes. Eligibility is
                               fixed when the proposal opens. Voting closes at
                               the deadline or when everyone has voted. Ties and

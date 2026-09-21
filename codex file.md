@@ -29,12 +29,12 @@ The existing gold-and-wine design, logo, architectural imagery, stylesheet, head
 ### Decisions and money
 
 - Every proposal snapshots its eligible member IDs when created. Later joins do not change that electorate.
-- Each eligible user has one changeable vote while voting remains open.
+- Each eligible member account has one changeable vote while voting remains open.
 - A strict majority of all eligible members must vote yes. Ties and insufficient participation reject the proposal.
 - Voting closes at its 1–30 day deadline or when all eligible members have voted. Results cannot be altered by further votes.
 - Any member can finalize an expired proposal; the scheduler also finalizes expired votes.
 - Approval records support for a plan. It does not grant the agent power to charge members, sign contracts, acquire property, or spend pooled money.
-- Actual fundraising, custody/escrow, entity formation, ownership allocation, refunds, payouts, contracts and supplier purchases remain future integrations requiring explicit authorization and appropriate operational arrangements.
+- Identity verification against duplicate accounts, actual fundraising, custody/escrow, entity formation, ownership allocation, refunds, payouts, contracts and supplier purchases remain future integrations requiring explicit authorization and appropriate operational arrangements.
 
 ## Data and authorization
 
