@@ -43,21 +43,14 @@ export default function LoginPage() {
     <div className="container flex min-h-[60vh] items-center justify-center py-12">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <p className="eyebrow mb-3">WELCOME TO HALAXIS</p>
-          <CardTitle className="font-serif text-3xl">
-            Your next chapter starts here.
-          </CardTitle>
-          <p className="text-sm text-muted-foreground pt-3">
-            Sign in or create an account with a secure email link.
-          </p>
+          <CardTitle>Log in</CardTitle>
         </CardHeader>
         <CardContent>
           {sent ? (
             <div className="space-y-4">
               <Alert>
                 <AlertDescription>
-                  Check your email for a login link. Use the most recent link to
-                  continue.
+                  Check your email for a login link. It expires in 24 hours.
                 </AlertDescription>
               </Alert>
               <Button

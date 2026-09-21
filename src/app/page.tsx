@@ -46,7 +46,7 @@ const pathways = [
   {
     title: "Learn & grow",
     description: "Understand our principles, approach, and commitments.",
-    href: "/resources",
+    href: "/compliance",
     image: "library",
     icon: BookOpen,
     label: "THE KNOWLEDGE",

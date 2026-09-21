@@ -18,7 +18,6 @@ export const navItems = [
   { href: "/strategy", label: "Vision" },
   { href: "/screen", label: "Screen" },
   { href: "/compliance", label: "Principles" },
-  { href: "/resources", label: "Resources" },
   { href: "/about", label: "About" },
 ] as const;
 
