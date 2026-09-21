@@ -33,10 +33,14 @@ class AnthropicProvider implements AIProvider {
     this.model = process.env.AI_MODEL || DEFAULT_ANTHROPIC_MODEL;
   }
 
-  async complete({ messages, system }: CompleteInput): Promise<string> {
+  async complete({
+    messages,
+    system,
+    maxTokens = 800,
+  }: CompleteInput): Promise<string> {
     const response = await this.client.messages.create({
       model: this.model,
-      max_tokens: 800,
+      max_tokens: maxTokens,
       system,
       messages: toAnthropicMessages(messages),
     });
@@ -73,10 +77,14 @@ class OpenAIProvider implements AIProvider {
     this.model = process.env.AI_MODEL || DEFAULT_OPENAI_MODEL;
   }
 
-  async complete({ messages, system }: CompleteInput): Promise<string> {
+  async complete({
+    messages,
+    system,
+    maxTokens = 800,
+  }: CompleteInput): Promise<string> {
     const response = await this.client.chat.completions.create({
       model: this.model,
-      max_tokens: 800,
+      max_tokens: maxTokens,
       messages: toOpenAiMessages(system, messages),
     });
     return response.choices[0]?.message?.content ?? "";

@@ -43,7 +43,7 @@ export default function LoginPage() {
     <div className="container flex min-h-[60vh] items-center justify-center py-12">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Log in</CardTitle>
+          <CardTitle>Sign in or create your account</CardTitle>
         </CardHeader>
         <CardContent>
           {sent ? (
@@ -89,7 +89,7 @@ export default function LoginPage() {
               </Button>
 
               <p className="text-xs text-center text-muted-foreground">
-                We&apos;ll send you a secure login link via email.
+                We&apos;ll send a secure email link. After signing in, create your personal agent and explore ventures.
               </p>
             </form>
           )}

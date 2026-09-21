@@ -93,7 +93,7 @@ export default function HomePage() {
               more purposeful future.
             </p>
             <div className="hero-actions">
-              <Link className="gold-button" href="/screen">
+              <Link className="gold-button" href="/dashboard">
                 Explore the platform <ArrowRight size={18} />
               </Link>
               <Link className="outline-button" href="/about">

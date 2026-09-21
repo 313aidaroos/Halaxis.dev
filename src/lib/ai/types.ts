@@ -8,6 +8,7 @@ export type ChatMessage = {
 export type CompleteInput = {
   messages: ChatMessage[];
   system: string;
+  maxTokens?: number;
 };
 
 export interface AIProvider {

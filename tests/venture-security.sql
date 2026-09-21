@@ -1,0 +1,55 @@
+begin;
+insert into auth.users(id) values('11111111-1000-4000-8000-000000000001'),('11111111-1000-4000-8000-000000000002'),('11111111-1000-4000-8000-000000000003');
+set local role authenticated;
+select set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000001',true);
+do $$
+declare v uuid; p uuid; t uuid; result jsonb; blocked boolean;
+begin
+ perform public.venture_action('save_agent','{"name":"Test One","mission":"Build a community harbor","skills":"planning"}');
+ result:=public.venture_action('create_venture','{"title":"Test Harbor","description":"A temporary transactional test venture for a port","target_amount":1000}');v:=(result->>'id')::uuid;
+ perform set_config('test.venture',v::text,true);
+ perform public.venture_action('create_task',jsonb_build_object('venture_id',v,'title','Research site','details','Document suitable site requirements'));
+ select id into t from public.venture_tasks where venture_id=v limit 1;
+ perform set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000002',true);
+ perform public.venture_action('save_agent','{"name":"Test Two","mission":"Supply harbor materials","skills":"logistics"}');
+ if exists(select 1 from public.venture_tasks where venture_id=v) then raise exception 'FAIL: nonmember can read tasks';end if;
+ blocked:=false;begin perform public.venture_action('create_task',jsonb_build_object('venture_id',v,'title','Intrusion'));exception when others then blocked:=true;end;if not blocked then raise exception 'FAIL: nonmember can write';end if;
+ perform public.venture_action('join',jsonb_build_object('venture_id',v));
+ blocked:=false;begin perform public.venture_action('complete_task',jsonb_build_object('venture_id',v,'task_id',t,'evidence','Unauthorized completion notes'));exception when others then blocked:=true;end;if not blocked then raise exception 'FAIL: nonowner completed task';end if;
+ perform set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000001',true);
+ perform public.venture_action('propose',jsonb_build_object('venture_id',v,'title','Select site','details','Investigate a site with documented alternatives','days',7,'amount',500));
+ select id into p from public.venture_proposals where venture_id=v limit 1;
+ perform set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000003',true);
+ perform public.venture_action('save_agent','{"name":"Test Three","mission":"Support a community harbor","skills":"engineering"}');
+ perform public.venture_action('join',jsonb_build_object('venture_id',v));
+ blocked:=false;begin perform public.venture_action('vote',jsonb_build_object('venture_id',v,'proposal_id',p,'choice',true));exception when others then blocked:=true;end;if not blocked then raise exception 'FAIL: late member voted';end if;
+ perform set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000001',true);
+ perform public.venture_action('vote',jsonb_build_object('venture_id',v,'proposal_id',p,'choice',true));
+ if (select status from public.venture_proposals where id=p)<>'open' then raise exception 'FAIL: closed early';end if;
+ perform public.venture_action('vote',jsonb_build_object('venture_id',v,'proposal_id',p,'choice',false));
+ if (select count(*) from public.venture_votes where proposal_id=p)<>1 then raise exception 'FAIL: duplicate vote';end if;
+ perform public.venture_action('vote',jsonb_build_object('venture_id',v,'proposal_id',p,'choice',true));
+ perform set_config('request.jwt.claim.sub','11111111-1000-4000-8000-000000000002',true);
+ perform public.venture_action('vote',jsonb_build_object('venture_id',v,'proposal_id',p,'choice',false));
+ if (select status from public.venture_proposals where id=p)<>'rejected' then raise exception 'FAIL: tie approved';end if;
+ blocked:=false;begin perform public.venture_action('vote',jsonb_build_object('venture_id',v,'proposal_id',p,'choice',true));exception when others then blocked:=true;end;if not blocked then raise exception 'FAIL: closed vote changed';end if;
+ perform public.venture_action('commitment',jsonb_build_object('venture_id',v,'amount',250));
+ if (select commitment from public.venture_members where venture_id=v and user_id=auth.uid())<>250 then raise exception 'FAIL: commitment not saved';end if;
+ blocked:=false;begin update public.venture_agents set name='Unauthorized' where user_id='11111111-1000-4000-8000-000000000001';exception when insufficient_privilege then blocked:=true;end;if not blocked then raise exception 'FAIL: direct agent write';end if;
+ blocked:=false;begin perform public.claim_agent_job();exception when insufficient_privilege then blocked:=true;end;if not blocked then raise exception 'FAIL: user can claim worker jobs';end if;
+ perform public.venture_action('queue',jsonb_build_object('venture_id',v));perform public.venture_action('queue',jsonb_build_object('venture_id',v));
+ if (select count(*) from public.agent_jobs where venture_id=v)<>1 then raise exception 'FAIL: duplicate active job';end if;
+end;$$;
+reset role;
+do $$
+declare j public.agent_jobs; n integer;
+begin
+ select * into j from public.claim_agent_job(null,'11111111-1000-4000-8000-000000000002');
+ if j.id is null then raise exception 'FAIL: worker cannot claim';end if;
+ if public.finish_agent_job(j.id,gen_random_uuid(),'{"summary":"bad","tasks":[]}') then raise exception 'FAIL: bad lease accepted';end if;
+ if not public.finish_agent_job(j.id,j.lease_token,'{"summary":"Test contribution from a member agent","tasks":[{"title":"Verify port access","details":"Confirm requirements with the appropriate authority"}],"sources":[]}') then raise exception 'FAIL: valid lease rejected';end if;
+ if public.finish_agent_job(j.id,j.lease_token,'{}') then raise exception 'FAIL: duplicate output accepted';end if;
+ if (select count(*) from public.agent_contributions where job_id=j.id)<>1 then raise exception 'FAIL: contribution missing';end if;
+end;$$;
+select 'PASS: membership isolation, write authorization, fixed electorate, unique votes, ties, finality, commitments, worker permissions, queue deduplication and lease idempotency' as result;
+rollback;
