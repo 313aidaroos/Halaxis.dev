@@ -9,6 +9,7 @@ const paths = [
   "/compliance",
   "/strategy",
   "/contact",
+  "/cixy",
   "/privacy",
   "/terms",
   "/risk",

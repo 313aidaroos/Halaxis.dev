@@ -1,6 +1,7 @@
 "use client";
 
 import { MessageCircle, Send, X } from "lucide-react";
+import Link from "next/link";
 import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -82,7 +83,7 @@ export function ChatWidget() {
           <div className="flex items-center justify-between border-b border-border px-4 py-3">
             <div>
               <p className="font-serif text-sm">Ask Halaxis</p>
-              <p className="text-xs text-muted-foreground">Educational only</p>
+              <p className="text-xs text-muted-foreground">Cixy · educational only</p>
             </div>
             <Button
               variant="ghost"
@@ -132,16 +133,24 @@ export function ChatWidget() {
           </form>
         </div>
       ) : null}
-      <Button
-        variant="gold"
-        className="shadow-lg"
-        onClick={() => setOpen((value) => !value)}
-        aria-expanded={open}
-        aria-controls="halaxis-chat"
-      >
-        <MessageCircle />
-        {open ? "Hide assistant" : "Ask a question"}
-      </Button>
+      <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
+        <Link
+          href="/cixy"
+          className="rounded-md border border-gold/30 bg-card/90 px-3 py-2 text-xs text-gold shadow-lg backdrop-blur-md hover:bg-card"
+        >
+          Customize Cixy
+        </Link>
+        <Button
+          variant="gold"
+          className="shadow-lg"
+          onClick={() => setOpen((value) => !value)}
+          aria-expanded={open}
+          aria-controls="halaxis-chat"
+        >
+          <MessageCircle />
+          {open ? "Hide assistant" : "Ask a question"}
+        </Button>
+      </div>
     </div>
   );
 }

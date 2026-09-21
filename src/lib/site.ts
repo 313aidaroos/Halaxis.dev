@@ -20,6 +20,7 @@ export const navItems = [
   { href: "/screen", label: "Screen" },
   { href: "/compliance", label: "Principles" },
   { href: "/about", label: "About" },
+  { href: "/cixy", label: "Cixy" },
 ] as const;
 
 export const legalNavItems = [
