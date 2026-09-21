@@ -15,10 +15,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { navItems, siteConfig } from "@/lib/site";
+import { apixisWalletBuyUrl } from "@/lib/wallet";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const buyIxisHref = apixisWalletBuyUrl();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md">
@@ -48,6 +50,9 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden xl:flex items-center gap-3">
+          <a href={buyIxisHref} className="text-sm text-foreground px-3 py-2">
+            Buy Ixis
+          </a>
           <Link
             href="/auth/login"
             className="text-sm text-foreground px-3 py-2"
@@ -89,6 +94,11 @@ export function SiteHeader() {
                   </Link>
                 </SheetClose>
               ))}
+              <SheetClose asChild>
+                <a href={buyIxisHref} className="text-base text-muted-foreground">
+                  Buy Ixis
+                </a>
+              </SheetClose>
               <SheetClose asChild>
                 <Button asChild variant="gold" className="mt-2">
                   <Link href="/auth/login">Get started</Link>
