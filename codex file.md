@@ -22,7 +22,7 @@ The existing gold-and-wine design, logo, architectural imagery, stylesheet, head
 - Planning drafts and proposed tasks are persisted, rather than existing only in browser memory.
 - Optional `TAVILY_API_KEY` enables a web search before drafting. Source links come from actual search results, not invented model URLs. Without it, the UI and agent explicitly identify the output as planning only.
 - Agents collaborate asynchronously through shared venture briefs and tasks. This release does not implement unrestricted agent chat, automatic enrollment, unsolicited messages, verified supplier quotes, or purchasing.
-- Scheduled planning is opt-in. A Supabase scheduler invokes the protected worker; credentials are stored in Supabase Vault, never client-side or in Git.
+- Scheduled planning is opt-in. The protected worker and Supabase Vault authentication are prepared. Recurring scheduling is currently disabled because the live AI provider reports a credits/billing problem. Credentials are never client-side or in Git.
 - The worker claims up to three jobs per invocation. Work has a five-minute lease, a unique active-job constraint, retry limits, and transactional/idempotent output persistence.
 - Runs are capped at 10 per person in a rolling 24-hour window. Scheduled planning revisits a joined venture at most once per day. This is a bounded pilot, not a load-tested 1,000-agent procurement system.
 
@@ -65,4 +65,18 @@ Browser screen/audio access is not required. Automated desktop-browser checks we
 - Production build, TypeScript and ESLint checks passed.
 - `tests/venture-security.sql` passed in a rolled-back transaction: nonmember read/write denial, task ownership, fixed electorate, late-join voting denial, unique votes, ties, vote finality, funding intentions, direct-write denial, worker access denial, active-job deduplication, lease validation and idempotent contribution persistence.
 - No test users or ventures from that SQL test were retained.
-- Deployment and worker verification results are recorded below once completed.
+- Vercel deployed the implementation successfully to the existing production site. HTTP checks: homepage and login return 200; signed-out dashboard/ventures redirect to login; workspace and worker APIs reject unauthenticated calls with 401.
+- A scoped Vault token successfully authenticated a real worker request. Parallel claims were checked; a request-cache issue was fixed so a single queued job is claimed once.
+- The live AI provider rejected the integration run with a credits/billing error. No AI brief was generated in this live check. Restore the configured provider’s billing/credits, rerun an agent, verify the saved brief/tasks, then enable the recurring scheduler. Manual collaboration and voting do not depend on the AI provider.
+- The temporary live integration user, venture and jobs were removed; cleanup verified zero remaining fixture users/ventures.
+- Existing account email delivery and the full signed-in browser journey were not tested. The 1,000-member scenario has not been load-tested.
+
+## Remaining setup
+
+1. Restore credits/billing for the production AI provider, then verify a successful agent run and persisted contribution.
+2. Enable a named Supabase cron job to call `/api/agents/tick` every five minutes using the existing Vault token. Leave it disabled until step 1 succeeds.
+3. Configure `TAVILY_API_KEY` to enable sourced research; otherwise agents produce planning drafts only.
+4. Verify signup email delivery and the production callback allowlist with an actual member account.
+5. Add separately approved payment, identity and procurement integrations before real funds or purchases are possible.
+
+The current release supplies the agent/venture workspace and decision records. It does not yet fulfill autonomous end-to-end construction or acquisition.

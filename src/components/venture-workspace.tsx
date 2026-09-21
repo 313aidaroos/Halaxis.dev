@@ -245,8 +245,10 @@ export function VentureWorkspace({ ventureId }: { ventureId?: string }) {
       setNotice(
         body.run?.error ??
           body.error ??
-          (action === "queue"
-            ? "Agent work saved. Read the brief and review its tasks below."
+          (action === "queue" || action === "resume"
+            ? (body.run?.processed ?? body.processed)
+              ? "Agent work saved. Read the brief and review its tasks below."
+              : "Agent work is queued or already being processed. Check its status below."
             : "Saved."),
       );
       await load();
