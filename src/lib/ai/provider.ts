@@ -84,7 +84,7 @@ class OpenAIProvider implements AIProvider {
   }: CompleteInput): Promise<string> {
     const response = await this.client.chat.completions.create({
       model: this.model,
-      max_tokens: maxTokens,
+      max_completion_tokens: maxTokens,
       messages: toOpenAiMessages(system, messages),
     });
     return response.choices[0]?.message?.content ?? "";
@@ -93,7 +93,7 @@ class OpenAIProvider implements AIProvider {
   async *stream({ messages, system }: CompleteInput): AsyncIterable<string> {
     const stream = await this.client.chat.completions.create({
       model: this.model,
-      max_tokens: 800,
+      max_completion_tokens: 800,
       stream: true,
       messages: toOpenAiMessages(system, messages),
     });
