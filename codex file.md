@@ -22,7 +22,7 @@ The existing gold-and-wine design, logo, architectural imagery, stylesheet, head
 - Planning drafts and proposed tasks are persisted, rather than existing only in browser memory.
 - Optional `TAVILY_API_KEY` enables a web search before drafting. Source links come from actual search results, not invented model URLs. Without it, the UI and agent explicitly identify the output as planning only.
 - Agents collaborate asynchronously through shared venture briefs and tasks. This release does not implement unrestricted agent chat, automatic enrollment, unsolicited messages, verified supplier quotes, or purchasing.
-- Scheduled planning is opt-in. The protected worker and Supabase Vault authentication are prepared. Recurring scheduling is currently disabled because the live AI provider reports a credits/billing problem. Credentials are never client-side or in Git.
+- Scheduled planning is opt-in. The protected worker runs through the active `halaxis-agent-work` Supabase cron job every five minutes, using Supabase Vault authentication. Only members who opt in receive scheduled planning. Credentials are never client-side or in Git.
 - The worker claims up to three jobs per invocation. Work has a five-minute lease, a unique active-job constraint, retry limits, and transactional/idempotent output persistence.
 - Runs are capped at 10 per person in a rolling 24-hour window. Scheduled planning revisits a joined venture at most once per day. This is a bounded pilot, not a load-tested 1,000-agent procurement system.
 
@@ -67,16 +67,15 @@ Browser screen/audio access is not required. Automated desktop-browser checks we
 - No test users or ventures from that SQL test were retained.
 - Vercel deployed the implementation successfully to the existing production site. HTTP checks: homepage and login return 200; signed-out dashboard/ventures redirect to login; workspace and worker APIs reject unauthenticated calls with 401.
 - A scoped Vault token successfully authenticated a real worker request. Parallel claims were checked; a request-cache issue was fixed so a single queued job is claimed once.
-- The live AI provider rejected the integration run with a credits/billing error. No AI brief was generated in this live check. Restore the configured provider’s billing/credits, rerun an agent, verify the saved brief/tasks, then enable the recurring scheduler. Manual collaboration and voting do not depend on the AI provider.
+- After the owner restored provider credits, the production worker returned HTTP 200 and completed a live integration job on its first attempt. Database verification confirmed exactly one saved planning brief and three tasks, with no job error. The brief correctly disclosed that live research was unavailable. The protected endpoint and output persistence are verified; this was not a browser signup test.
+- Enabled and verified the active `halaxis-agent-work` schedule (`*/5 * * * *`). This checks for work every five minutes, not a new AI run for every member every five minutes. Opt-in, daily venture frequency, three-job worker batches, and per-owner limits still apply. AI API usage is billed to the configured provider account.
 - The temporary live integration user, venture and jobs were removed; cleanup verified zero remaining fixture users/ventures.
 - Existing account email delivery and the full signed-in browser journey were not tested. The 1,000-member scenario has not been load-tested.
 
 ## Remaining setup
 
-1. Restore credits/billing for the production AI provider, then verify a successful agent run and persisted contribution.
-2. Enable a named Supabase cron job to call `/api/agents/tick` every five minutes using the existing Vault token. Leave it disabled until step 1 succeeds.
-3. Configure `TAVILY_API_KEY` to enable sourced research; otherwise agents produce planning drafts only.
-4. Verify signup email delivery and the production callback allowlist with an actual member account.
-5. Add separately approved payment, identity and procurement integrations before real funds or purchases are possible.
+1. Configure `TAVILY_API_KEY` to enable sourced research; otherwise agents produce planning drafts only.
+2. Verify signup email delivery and the production callback allowlist with an actual member account.
+3. Add separately approved payment, identity and procurement integrations before real funds or purchases are possible.
 
 The current release supplies the agent/venture workspace and decision records. It does not yet fulfill autonomous end-to-end construction or acquisition.

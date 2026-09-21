@@ -10,4 +10,11 @@ create or replace function public.verify_agent_worker_token(supplied text) retur
 $$;
 revoke all on function public.verify_agent_worker_token(text) from public,anon,authenticated;
 grant execute on function public.verify_agent_worker_token(text) to service_role;
--- Scheduled only after the matching API has been deployed and verified.
+-- Enabled after a successful production worker run on September 21, 2026.
+select cron.schedule('halaxis-agent-work','*/5 * * * *',$job$
+ select net.http_get(
+  url:='https://halaxis.vercel.app/api/agents/tick',
+  headers:=jsonb_build_object('Authorization','Bearer '||
+   (select decrypted_secret from vault.decrypted_secrets where name='halaxis_agent_worker_auth')),
+  timeout_milliseconds:=60000);
+$job$);
