@@ -40,7 +40,7 @@ export function ChatWidget() {
 
       if (!response.ok) {
         const data = (await response.json().catch(() => ({}))) as { error?: string };
-        throw new Error(data.error ?? "The assistant is unavailable.");
+        throw new Error(data.error ?? "Hala is unavailable.");
       }
 
       const reader = response.body?.getReader();
@@ -77,11 +77,11 @@ export function ChatWidget() {
         <div
           className="flex h-[28rem] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl border border-border bg-card shadow-2xl"
           role="dialog"
-          aria-label="Halaxis educational assistant"
+          aria-label="Hala — Halaxis educational assistant"
         >
           <div className="flex items-center justify-between border-b border-border px-4 py-3">
             <div>
-              <p className="font-serif text-sm">Ask Halaxis</p>
+              <p className="font-serif text-sm">Ask Hala</p>
               <p className="text-xs text-muted-foreground">Educational only</p>
             </div>
             <Button
@@ -140,7 +140,7 @@ export function ChatWidget() {
         aria-controls="halaxis-chat"
       >
         <MessageCircle />
-        {open ? "Hide assistant" : "Ask a question"}
+        {open ? "Hide Hala" : "Ask Hala"}
       </Button>
     </div>
   );
