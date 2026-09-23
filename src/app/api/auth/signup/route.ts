@@ -5,6 +5,7 @@ import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 const emailSchema = z.object({
   email: z.string().email().toLowerCase(),
+  redirectTo: z.string().optional(),
 });
 
 /**
@@ -39,15 +40,16 @@ export async function POST(request: Request) {
     );
   }
 
-  const { email } = parsed.data;
+  const { email, redirectTo } = parsed.data;
 
   try {
-    // Send magic link (no return_to needed for now; callback will handle redirect)
+    const defaultRedirect = `${process.env.NEXT_PUBLIC_APP_URL || "https://halaxis.vercel.app"}/auth/callback`;
+    // Send magic link
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || "https://halaxis.dev"}/api/auth/callback`,
+        emailRedirectTo: redirectTo || defaultRedirect,
       },
     });
 
