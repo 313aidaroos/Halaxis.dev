@@ -1,3 +1,4 @@
+// Change note (Claude, Sep 2026): Rate limited. See docs/LAUNCH_NOTES.md.
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { clientKey, rateLimit } from "@/lib/rate-limit";
