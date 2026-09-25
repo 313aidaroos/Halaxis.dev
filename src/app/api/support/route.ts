@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { clientKey, rateLimit } from "@/lib/rate-limit";
 
 import { sendSupportIntake } from "@/lib/email";
 import { isResendConfigured } from "@/lib/flags";
@@ -15,6 +16,10 @@ const supportSchema = z.object({
  * Support intake form. Sends to halaxis@apixis.dev (forwarded to awad@apixis.dev).
  */
 export async function POST(request: Request) {
+  const limited = rateLimit(clientKey(request, "support"), 5, 10 * 60 * 1000);
+  if (!limited.success) {
+    return NextResponse.json({ error: "Too many requests. Please wait a few minutes." }, { status: 429 });
+  }
   let json: unknown;
   try {
     json = await request.json();
