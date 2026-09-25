@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,9 +11,20 @@ import { createBrowserClient } from "@supabase/ssr";
 
 export const dynamic = "force-dynamic";
 
+// useSearchParams needs a Suspense boundary or the production build fails to prerender.
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginPageInner />
+    </Suspense>
+  );
+}
+
+function LoginPageInner() {
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? "/";
+  // Same-origin paths only: an absolute or javascript: URL here is an open redirect / XSS.
+  const rawNext = searchParams.get("next") ?? "/";
+  const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/";
   
   const [mode, setMode] = useState<"magic" | "password">("magic");
   const [email, setEmail] = useState("");

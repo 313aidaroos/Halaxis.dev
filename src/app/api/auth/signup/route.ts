@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { clientKey, rateLimit } from "@/lib/rate-limit";
 
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
@@ -14,6 +15,10 @@ const emailSchema = z.object({
  * Not creating accounts; just sending passwordless links.
  */
 export async function POST(request: Request) {
+  const limited = rateLimit(clientKey(request, "signup"), 5, 10 * 60 * 1000);
+  if (!limited.success) {
+    return NextResponse.json({ error: "Too many requests. Please wait a few minutes." }, { status: 429 });
+  }
   let json: unknown;
   try {
     json = await request.json();
