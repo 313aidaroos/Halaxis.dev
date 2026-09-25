@@ -24,6 +24,8 @@ None pending.
 
 ## What changed, file by file
 
+Each changed backend code file also starts with a one-line `Change note (Claude, Sep 2026)` comment saying the same thing.
+
 | File | Change |
 |---|---|
 | `.env.example` | Added 5 key(s) the code reads that were missing: `CRON_SECRET`, `WALLET_API_KEY`, `APIXIS_WALLET_API_URL`, `TAVILY_API_KEY`, `APIXIS_WALLET_API_KEY`. |
