@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { createBrowserClient } from "@supabase/ssr";
+import { SignInWithApixis } from "@/components/SignInWithApixis";
 
 export const dynamic = "force-dynamic";
 
@@ -132,6 +133,8 @@ function LoginPageInner() {
                 </Button>
               </div>
             ) : (
+              <>
+              <SignInWithApixis />
               <form onSubmit={handleMagicLink} className="space-y-4">
                 {error && (
                   <Alert>
@@ -161,6 +164,7 @@ function LoginPageInner() {
                   your personal agent and explore ventures.
                 </p>
               </form>
+              </>
             )
           ) : (
             <form onSubmit={handlePasswordSignIn} className="space-y-4">
