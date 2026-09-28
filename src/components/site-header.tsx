@@ -17,6 +17,7 @@ import {
 import { navItems, siteConfig } from "@/lib/site";
 import { apixisWalletBuyUrl } from "@/lib/wallet";
 import { cn } from "@/lib/utils";
+import { ApixisWalletChip } from "@/components/ApixisWalletChip";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -50,6 +51,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden xl:flex items-center gap-3">
+          <ApixisWalletChip className="text-sm text-muted-foreground" />
           <a href={buyIxisHref} className="text-sm text-foreground px-3 py-2">
             Buy Ixis
           </a>
@@ -64,6 +66,8 @@ export function SiteHeader() {
           </Button>
         </div>
 
+        <div className="flex items-center gap-2 xl:hidden">
+          <ApixisWalletChip className="text-xs text-muted-foreground" hideSignedOut />
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -107,6 +111,7 @@ export function SiteHeader() {
             </nav>
           </SheetContent>
         </Sheet>
+        </div>
       </div>
     </header>
   );
