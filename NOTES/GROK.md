@@ -8,3 +8,9 @@ Grok Bot (Developer Bot hub + product leads) notes. Every change Grok Bot makes 
 - Undo: restore `WALLET_API_KEY` to its legacy value and deactivate the `halaxis` client row.
 
 - `/buy` remains broken because Wallet `lib/catalog.ts` has no Halaxis items; this was not fixed.
+
+## 2026-09-27 — Apixis ID + Wallet balance pill (Grok Bot)
+- **What:** Merged Claude's PR #5 (Sign in with Apixis + SDK v3 + shared Wallet; update-branch was clean) with Grok commit 9b63993: `src/components/ApixisWalletChip.tsx` rewritten (one shared fetch of `/api/wallet/balance`, refetch on focus / visibilitychange / pageshow, "Sign in with Apixis" when signed out or unlinked), balance route returns `linked`, and a small pill in the mobile header next to the menu button (desktop pill was already in the header). Balance only: Hala stays faceless, no persona/UI changes.
+- **Merge SHA:** f3bfb0a. Prod READY; `/api/wallet/balance` → 401 `{signIn:true}`; `/auth/apixis/start` → 302 to Wallet `/sso/authorize?client_id=halaxis`.
+- **Undo:** `git revert -m 1 f3bfb0a` (or revert PR #5).
+- No Wallet code, env/keys, Stripe, checkout or payment links changed.
