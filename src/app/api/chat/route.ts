@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          "The educational assistant is not configured. Use the interest form at /contact instead.",
+          "Hala is not configured. Use the interest form at /contact instead.",
       },
       { status: 503 },
     );
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Assistant unavailable.";
+      error instanceof Error ? error.message : "Hala is unavailable.";
     return NextResponse.json({ error: message }, { status: 503 });
   }
 }

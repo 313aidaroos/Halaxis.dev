@@ -15,8 +15,8 @@ export function PaymentPanel() {
           <Badge variant="outline">Apixis Wallet</Badge>
         </div>
         <CardDescription>
-          All Halaxis access is redeemed with Ixis points. Buy Ixis in Apixis Wallet (100 Ixis = $1 USD).
-          Ixis is closed-loop platform credit — NOT an investment, non-withdrawable.
+          All Halaxis access is redeemed with Ixis points. Buy Ixis in Apixis Wallet — cash is credited only there (100 Ixis = $1 USD).
+          Ixis is closed-loop platform credit, non-withdrawable, and not an investment. Halaxis does not run a separate card checkout.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
