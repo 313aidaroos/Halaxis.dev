@@ -66,6 +66,8 @@ export function SiteHeader() {
           </Button>
         </div>
 
+        <div className="flex items-center gap-2 xl:hidden">
+          <ApixisWalletChip className="text-xs text-muted-foreground" hideSignedOut />
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -109,6 +111,7 @@ export function SiteHeader() {
             </nav>
           </SheetContent>
         </Sheet>
+        </div>
       </div>
     </header>
   );
