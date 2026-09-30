@@ -20,5 +20,6 @@ Grok Bot (Developer Bot hub + product leads) notes. Every change Grok Bot makes 
 - Header: sign-in is "Log in with Apixis ID" (Wallet SSO, `/auth/apixis/start`); the old "Sign in" → `/auth/login` link was removed and "Get started" hides when signed in. `/api/wallet/balance` returns `worldAgent`, and the pill shows "Your agent is in the Apixis world ↗" → `https://www.apixis.dev/enter?from=halaxis` (mobile: in the menu). `/login` now redirects to `/auth/login`, which shows Apixis callback errors (it used to 404).
 - **Env:** `APIXIS_WORLD_KEY` is **missing** on Vercel project `halaxis` (name-only check). Not minted; Developer Bot must issue it. Until then provisioning is skipped quietly.
 - **Undo:** close the PR / delete branch `grok/one-account`; after a merge, `git revert` the merge commit. Saved `app_metadata.apixis_world_agent_*` keys are harmless; remove them with `updateUserById` if needed.
+- Starter grant: per Awad (8:54 PM CT) new signups get **1000** Ixis (not 200). Apixis.dev grants it during provisioning; Halaxis never grants or stores Ixis. Repo had no "200 Ixis" copy; comments and Hala's system prompt now say 1000.
 - Not touched: Wallet code/settings, Stripe skeleton, payment keys, venture agents, Hala.
 

@@ -11,7 +11,7 @@
  *     → https://www.apixis.dev/enter?from=socixis&next=%2Fworld.html%23market
  *
  * What happens: /enter → Apixis ID (Wallet sign-in, instant if already signed in) → Apixis.dev
- * creates or reuses the person's citizen + agent (default look, 200 starter Ixis once) → the world,
+ * creates or reuses the person's citizen + agent (default look, 1000 starter Ixis once, granted on Apixis.dev) → the world,
  * with a "Back to <product>" link for `from`.
  */
 

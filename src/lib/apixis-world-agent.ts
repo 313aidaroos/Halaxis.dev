@@ -5,7 +5,7 @@
  *
  * On sign-in (Apixis ID callback, email-link callback) and on /dashboard, if the Supabase auth user has
  * no app_metadata.apixis_world_agent_at yet, ask Apixis.dev POST /api/agent/provision to create or reuse
- * their agent (default customizable Apixis body, 200 in-world Ixis once), then record
+ * their agent (default customizable Apixis body, 1000 starter Ixis once, granted by Apixis.dev; never granted or stored here), then record
  * apixis_world_agent_at / _id / _name on the user so later loads skip the call. Apixis.dev is idempotent
  * per verified email / Apixis ID, so a retry never creates a second agent or a second grant.
  *
