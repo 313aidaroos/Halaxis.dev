@@ -17,11 +17,14 @@ import {
 import { navItems, siteConfig } from "@/lib/site";
 import { apixisWalletBuyUrl } from "@/lib/wallet";
 import { cn } from "@/lib/utils";
-import { ApixisWalletChip } from "@/components/ApixisWalletChip";
+import { ApixisWalletChip, HALAXIS_WORLD_ENTER_URL, useApixisWallet } from "@/components/ApixisWalletChip";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const buyIxisHref = apixisWalletBuyUrl();
+  const wallet = useApixisWallet();
+  // Sign-in is "Log in with Apixis ID" (Wallet SSO); the email link stays at /auth/login as a fallback.
+  const apixisLogin = `/auth/apixis/start?next=${encodeURIComponent(pathname || "/")}`;
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md">
@@ -55,19 +58,15 @@ export function SiteHeader() {
           <a href={buyIxisHref} className="text-sm text-foreground px-3 py-2">
             Buy Ixis
           </a>
-          <Link
-            href="/auth/login"
-            className="text-sm text-foreground px-3 py-2"
-          >
-            Sign in
-          </Link>
-          <Button asChild variant="gold" size="sm">
-            <Link href="/auth/login">Get started</Link>
-          </Button>
+          {!wallet.signedIn && (
+            <Button asChild variant="gold" size="sm">
+              <a href={apixisLogin}>Get started</a>
+            </Button>
+          )}
         </div>
 
         <div className="flex items-center gap-2 xl:hidden">
-          <ApixisWalletChip className="text-xs text-muted-foreground" hideSignedOut />
+          <ApixisWalletChip className="text-xs text-muted-foreground" hideSignedOut hideWorld />
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -103,11 +102,20 @@ export function SiteHeader() {
                   Buy Ixis
                 </a>
               </SheetClose>
-              <SheetClose asChild>
-                <Button asChild variant="gold" className="mt-2">
-                  <Link href="/auth/login">Get started</Link>
-                </Button>
-              </SheetClose>
+              {wallet.signedIn && wallet.worldAgent && (
+                <SheetClose asChild>
+                  <a href={HALAXIS_WORLD_ENTER_URL} className="text-base text-muted-foreground">
+                    Your agent is in the Apixis world ↗
+                  </a>
+                </SheetClose>
+              )}
+              {!wallet.signedIn && (
+                <SheetClose asChild>
+                  <Button asChild variant="gold" className="mt-2">
+                    <a href={apixisLogin}>Log in with Apixis ID</a>
+                  </Button>
+                </SheetClose>
+              )}
             </nav>
           </SheetContent>
         </Sheet>

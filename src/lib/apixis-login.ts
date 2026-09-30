@@ -27,6 +27,7 @@ import { cookies } from "next/headers";
 import { createClient, type User } from "@supabase/supabase-js";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { apixisLoginUrl, exchangeLoginCode } from "./apixis-wallet";
+import { ensureHalaxisWorldAgent } from "./apixis-world-agent";
 
 const STATE_COOKIE = "apixis_login";
 
@@ -115,6 +116,14 @@ export async function finishApixisLogin(request: Request) {
   });
   const { error } = await supabase.auth.verifyOtp({ type: "magiclink", token_hash: tokenHash });
   if (error) return fail("session_error");
+
+  // Halaxis (2026-09-29): one Apixis ID = one world agent. Create it on first sign-in; no-op after.
+  if (link.data.user) {
+    await ensureHalaxisWorldAgent({
+      ...link.data.user,
+      app_metadata: { ...link.data.user.app_metadata, apixis_sub: identity.sub },
+    });
+  }
 
   return NextResponse.redirect(new URL(safeNext(saved.next ?? "/"), url.origin), 302);
 }

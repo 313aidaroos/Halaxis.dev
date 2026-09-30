@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { ensureHalaxisWorldAgent } from "@/lib/apixis-world-agent";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -16,6 +17,8 @@ export async function GET(request: Request) {
     // Check if user has password set — if not, redirect to set-password
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
+      // One Apixis ID = one world agent: create it on first sign-in (no-op once recorded).
+      await ensureHalaxisWorldAgent(user);
       const { data: session } = await supabase.auth.getSession();
       // First-time magic-link user → offer password setup
       if (session && !user.user_metadata.password_set) {

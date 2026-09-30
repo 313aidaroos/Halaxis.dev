@@ -19,3 +19,8 @@ Entry format:
 ## 2026-09-28 — JunoAI
 - Changed: Added .github/workflows/ci.yml — thin caller of the shared reusable workflow 313aidaroos/github-actions/.github/workflows/node-ci.yml@main (checkout → Node 20 → npm ci → lint/typecheck/test/build).
 - Why: Standardize CI across repos via the shared reusable workflow.
+
+## 2026-09-29 — Grok Bot (Halaxis Lead)
+- Changed: src/lib/apixis-world-provision.ts, src/lib/apixis-world.ts (copied from Renoxis), src/lib/apixis-world-agent.ts (new), src/lib/apixis-login.ts, src/app/auth/callback/route.ts, src/app/dashboard/page.tsx, src/app/api/wallet/balance/route.ts, src/components/ApixisWalletChip.tsx, src/components/site-header.tsx, src/components/SignInWithApixis.tsx, src/app/auth/login/page.tsx, next.config.mjs, .env.example, NOTES/GROK.md, WORKBOARD.md
+- Why: One Apixis ID = one Wallet = one world agent. Provision the user's own Apixis world agent on first sign-in (idempotent, stored in auth app_metadata), link to the Apixis world, and make "Log in with Apixis ID" the header sign-in.
+

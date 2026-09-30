@@ -26,6 +26,8 @@ function LoginPageInner() {
   // Same-origin paths only: an absolute or javascript: URL here is an open redirect / XSS.
   const rawNext = searchParams.get("next") ?? "/";
   const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/";
+  // Set by /auth/apixis/callback when Apixis ID sign-in did not finish (e.g. login_expired).
+  const apixisError = searchParams.get("error");
   
   const [mode, setMode] = useState<"magic" | "password">("magic");
   const [email, setEmail] = useState("");
@@ -134,6 +136,11 @@ function LoginPageInner() {
               </div>
             ) : (
               <>
+              {apixisError && (
+                <Alert>
+                  <AlertDescription>Apixis ID sign-in didn&apos;t finish ({apixisError}). Please try again.</AlertDescription>
+                </Alert>
+              )}
               <SignInWithApixis />
               <form onSubmit={handleMagicLink} className="space-y-4">
                 {error && (

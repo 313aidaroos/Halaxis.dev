@@ -14,3 +14,11 @@ Grok Bot (Developer Bot hub + product leads) notes. Every change Grok Bot makes 
 - **Merge SHA:** f3bfb0a. Prod READY; `/api/wallet/balance` → 401 `{signIn:true}`; `/auth/apixis/start` → 302 to Wallet `/sso/authorize?client_id=halaxis`.
 - **Undo:** `git revert -m 1 f3bfb0a` (or revert PR #5).
 - No Wallet code, env/keys, Stripe, checkout or payment links changed.
+
+## 2026-09-29 ~21:00 CT — One account / one agent / one Wallet (Halaxis Lead, Grok Bot)
+- **What:** branch `grok/one-account` (PR, not merged, no prod deploy). Copied Renoxis's `lib/apixis-world-provision.ts` + `lib/apixis-world.ts` verbatim; new `src/lib/apixis-world-agent.ts` mirrors Renoxis `world-agent(-server).ts` with client `halaxis`. On first sign-in (`/auth/apixis/callback`, `/auth/callback`) and on `/dashboard`, a verified user without `app_metadata.apixis_world_agent_at` gets `POST https://www.apixis.dev/api/agent/provision` (Bearer `APIXIS_WORLD_KEY`); on 200 we save `apixis_world_agent_at/_id/_name` in Supabase auth `app_metadata` (no DB migration). Apixis.dev is idempotent per verified email / Apixis ID.
+- Header: sign-in is "Log in with Apixis ID" (Wallet SSO, `/auth/apixis/start`); the old "Sign in" → `/auth/login` link was removed and "Get started" hides when signed in. `/api/wallet/balance` returns `worldAgent`, and the pill shows "Your agent is in the Apixis world ↗" → `https://www.apixis.dev/enter?from=halaxis` (mobile: in the menu). `/login` now redirects to `/auth/login`, which shows Apixis callback errors (it used to 404).
+- **Env:** `APIXIS_WORLD_KEY` is **missing** on Vercel project `halaxis` (name-only check). Not minted; Developer Bot must issue it. Until then provisioning is skipped quietly.
+- **Undo:** close the PR / delete branch `grok/one-account`; after a merge, `git revert` the merge commit. Saved `app_metadata.apixis_world_agent_*` keys are harmless; remove them with `updateUserById` if needed.
+- Not touched: Wallet code/settings, Stripe skeleton, payment keys, venture agents, Hala.
+

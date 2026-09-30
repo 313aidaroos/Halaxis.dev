@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { enterApixisUrl } from "@/lib/apixis-world";
 
 /**
  * The shared Apixis Wallet inside this site: the person's one Ixis balance as a small pill
@@ -10,12 +11,14 @@ import { useEffect, useState, useSyncExternalStore } from "react";
  * One fetch of GET /api/wallet/balance is shared by every chip on the page. It refetches when the
  * tab regains focus / becomes visible and on pageshow (back/forward cache), so the number updates
  * right after a purchase on Apixis Wallet sends the person back. Never shows a made-up number.
- * Updated 2026-09-27 (Grok, balance pill).
+ * Updated 2026-09-27 (Grok, balance pill). 2026-09-29: "Log in with Apixis ID" label and the
+ * "Your agent is in the Apixis world" link once the person's own world agent exists (Halaxis Lead).
  */
 
-type WalletState = { available: number | null; buy: string | null; linked: boolean; signedIn: boolean; loaded: boolean };
+type WalletState = { available: number | null; buy: string | null; linked: boolean; signedIn: boolean; loaded: boolean; worldAgent: boolean };
 
-const INITIAL: WalletState = { available: null, buy: null, linked: false, signedIn: false, loaded: false };
+const INITIAL: WalletState = { available: null, buy: null, linked: false, signedIn: false, loaded: false, worldAgent: false };
+export const HALAXIS_WORLD_ENTER_URL = enterApixisUrl("halaxis");
 const FALLBACK_BUY = "https://apixis-wallet.vercel.app/buy?product=wallet";
 let current: WalletState = INITIAL;
 let inFlight = false;
@@ -35,6 +38,7 @@ function load() {
         linked: d.linked === true,
         signedIn: status !== 401,
         loaded: true,
+        worldAgent: d.worldAgent === true,
       };
       listeners.forEach((listener) => listener());
     })
@@ -67,7 +71,7 @@ export function useApixisWallet(): WalletState {
   return useSyncExternalStore(subscribe, () => current, () => INITIAL);
 }
 
-export function ApixisWalletChip({ className, next, hideSignedOut = false }: { className?: string; next?: string; hideSignedOut?: boolean }) {
+export function ApixisWalletChip({ className, next, hideSignedOut = false, hideWorld = false }: { className?: string; next?: string; hideSignedOut?: boolean; hideWorld?: boolean }) {
   const wallet = useApixisWallet();
   const [here, setHere] = useState("/");
   useEffect(() => {
@@ -103,7 +107,12 @@ export function ApixisWalletChip({ className, next, hideSignedOut = false }: { c
       </a>
       {wallet.loaded && (!wallet.signedIn || !wallet.linked) && (
         <a className="apx-wallet-signin" href={signIn} style={{ color: "inherit", fontSize: 11, textDecoration: "underline", whiteSpace: "nowrap", opacity: 0.85 }}>
-          Sign in with Apixis
+          Log in with Apixis ID
+        </a>
+      )}
+      {!hideWorld && wallet.signedIn && wallet.worldAgent && (
+        <a className="apx-world-link" href={HALAXIS_WORLD_ENTER_URL} style={{ color: "inherit", fontSize: 11, textDecoration: "underline", whiteSpace: "nowrap", opacity: 0.85 }}>
+          Your agent is in the Apixis world ↗
         </a>
       )}
     </span>

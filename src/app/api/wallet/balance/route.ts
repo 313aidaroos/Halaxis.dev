@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import { buyIxisUrl, walletBalance, WalletError } from "@/lib/apixis-wallet";
 import { apixisSubOf } from "@/lib/apixis-login";
+import { hasWorldAgent } from "@/lib/apixis-world-agent";
 
 export const dynamic = "force-dynamic";
 
@@ -26,7 +27,7 @@ export async function GET(request: Request) {
   if (!owner) return NextResponse.json({ available: null, buy, linked: false });
   try {
     const balance = await walletBalance(owner, { history: 10 });
-    return NextResponse.json({ ...balance, buy, linked: Boolean(apixisSubOf(user)) }, { headers: { "cache-control": "no-store" } });
+    return NextResponse.json({ ...balance, buy, linked: Boolean(apixisSubOf(user)), worldAgent: hasWorldAgent(user) }, { headers: { "cache-control": "no-store" } });
   } catch (error) {
     const signInWithApixis = error instanceof WalletError && (error.status === 403 || error.status === 404);
     return NextResponse.json({ available: null, buy, signInWithApixis }, { status: signInWithApixis ? 200 : 503 });
