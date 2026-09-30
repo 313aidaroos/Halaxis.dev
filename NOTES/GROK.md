@@ -17,5 +17,6 @@ Grok Bot (Developer Bot hub + product leads) notes. Every change Grok Bot makes 
 
 ## 2026-09-29 (CT) — Halaxis Lead (Grok Bot)
 - **What:** Added an "Other Ixis companies" row to the site footer (Awad-approved task, via Developer Bot hub). The links live in `src/lib/ixis-companies.ts`, and the markup is in `src/components/site-footer.tsx` between the footer grid and the footer bottom. `src/app/globals.css` has a small `.footer-ixis` block that reuses the existing footer heading and link styles. Links open in a new tab. Halaxis is excluded, and so are Nexxis/Omnixis, Launchixis, PersonalContentBot, AwadBot, and COMMAND.
+- **Update (same day):** Awad asked to remove Qahwah World and Nursery Toons, so the list is now 11 sites.
 - **Where:** PR branch `grok/ixis-footer`, preview only. Not merged or deployed.
 - **Undo:** close the PR, or revert its commit(s).

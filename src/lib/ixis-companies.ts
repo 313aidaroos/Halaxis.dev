@@ -11,7 +11,5 @@ export const ixisCompanies = [
   { name: "Recovra", href: "https://recovra-three.vercel.app" },
   { name: "Deduxis", href: "https://deduxis.vercel.app" },
   { name: "Geoxis", href: "https://spatial-dashboard-xi.vercel.app" },
-  { name: "Qahwah World", href: "https://qahwahworld.vercel.app" },
-  { name: "Nursery Toons", href: "https://nurserytoons.vercel.app" },
   { name: "Wattixis", href: "https://wattixis.vercel.app" },
 ] as const;
