@@ -672,6 +672,26 @@ em {
   background: #cbae83;
   border-radius: 50%;
 }
+.footer-ixis {
+  padding-bottom: 28px;
+}
+.footer-ixis h2 {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+.footer-ixis ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 22px;
+}
+.footer-ixis li {
+  font-size: 11px;
+  color: #cdbfb1;
+}
+.footer-ixis a:hover {
+  color: #edcc95;
+}
 .footer-bottom {
   border-top: 1px solid #95734445;
   padding-top: 22px;
