@@ -29,3 +29,7 @@ Entry format:
 ## 2026-09-30 — Claude (branch claude/awesome-newton-3tygzi)
 - Changed: `src/lib/apixis-login.ts` re-copied from `ApixisWallet/sdk/apixis-login-next.ts` — `verifyOtp({ type: "email" })` (D16: new addresses get a `signup` token that `magiclink` rejects). `src/lib/apixis-wallet.ts` → SDK v3.1 (adds `marketplaceOrder`/`marketplaceSettle`). `src/lib/apixis-world*.ts` re-synced with Apixis.dev (15 clients incl. ominix, wattixis; 1,000 starter Ixis, D11).
 - Why: family backend pass per Awad's 2026-09-30 decisions (ApixisWallet/AGENTS.md §0c D11–D16; live board: ApixisWallet/docs/FAMILY_STATUS.md). One SDK, one login kit, one world kit — copied from canonical, never patched by hand.
+
+## 2026-10-01 (early) — Claude
+- Changed: `typecheck` script added (0 errors); CI already present.
+- Why: overnight second pass.
