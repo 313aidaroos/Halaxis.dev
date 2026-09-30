@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Brand } from "@/components/brand";
 import { legalNavItems, navItems, siteConfig } from "@/lib/site";
+import { ixisCompanies } from "@/lib/ixis-companies";
 export function SiteFooter() {
   return (
     <footer className="site-footer geometric-grid">
@@ -54,6 +55,18 @@ export function SiteFooter() {
             Stay connected <ArrowRight size={16} />
           </Link>
         </div>
+      </div>
+      <div className="container footer-ixis">
+        <h2>Other Ixis companies</h2>
+        <ul>
+          {ixisCompanies.map((company) => (
+            <li key={company.href}>
+              <a href={company.href} target="_blank" rel="noopener noreferrer">
+                {company.name}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="container footer-bottom">
         <p>

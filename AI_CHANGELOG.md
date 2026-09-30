@@ -19,3 +19,8 @@ Entry format:
 ## 2026-09-28 — JunoAI
 - Changed: Added .github/workflows/ci.yml — thin caller of the shared reusable workflow 313aidaroos/github-actions/.github/workflows/node-ci.yml@main (checkout → Node 20 → npm ci → lint/typecheck/test/build).
 - Why: Standardize CI across repos via the shared reusable workflow.
+
+## 2026-09-29 — Grok Bot (Halaxis Lead)
+- Changed: src/lib/ixis-companies.ts (new), src/components/site-footer.tsx, src/app/globals.css, NOTES/GROK.md, WORKBOARD.md
+- Why: Awad-approved "Other Ixis companies" footer links to the other Ixis product sites.
+- Update: removed the Qahwah World and Nursery Toons links at Awad's request (11 sites).
