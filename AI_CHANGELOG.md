@@ -33,3 +33,7 @@ Entry format:
 ## 2026-10-01 (early) — Claude
 - Changed: `typecheck` script added (0 errors); CI already present.
 - Why: overnight second pass.
+
+## 2026-10-02 — Claude (Claude Code)
+- Changed: `.env.example` now lists every env var the code reads (missing names appended with a one-line note each).
+- Why: so the owner can add keys in Vercel from one complete list. No code changed.
