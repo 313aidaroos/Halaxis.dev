@@ -14,3 +14,37 @@ Grok Bot (Developer Bot hub + product leads) notes. Every change Grok Bot makes 
 - **Merge SHA:** f3bfb0a. Prod READY; `/api/wallet/balance` → 401 `{signIn:true}`; `/auth/apixis/start` → 302 to Wallet `/sso/authorize?client_id=halaxis`.
 - **Undo:** `git revert -m 1 f3bfb0a` (or revert PR #5).
 - No Wallet code, env/keys, Stripe, checkout or payment links changed.
+
+## 2026-10-02 (CT) — Backfill by Halaxis Lead (Grok Bot), covering 9/27 to 10/2
+Backfill of changes made since the last entry that weren't logged here. Times are CT. Only this file changed in this commit, and nothing else was touched.
+
+**Grok (Halaxis Lead)**
+- 9/27 10:18 PM: merged PR #6 (`cursor/hala-faceless-wallet-buy-cfd5`) after a GraphQL rebase. It renamed Cixy to Hala (faceless) and added the Wallet `/buy?product=halaxis` link. Merge commit 019eee0. Undo: `git revert -m 1 019eee0`.
+- 9/29 8:32 PM: opened PR #12 (`grok/ixis-footer`), adding the "Other Ixis companies" footer row with the list in `src/lib/ixis-companies.ts`. At 8:40 PM, at Awad's request, removed Qahwah World and Nursery Toons (11 sites, 729c979). It is NOT merged and now CONFLICTS with main, likely because of the /companies work. Undo: close the PR.
+- 9/29 8:53 PM: opened PR #13 (`grok/one-account`) for the one-account, one-agent, one-wallet task. It was closed unmerged 10/1 11:18 PM, because main already covers it. The branch still exists (2 ahead, 8 behind).
+
+**Direct-to-main commit (not via PR)**
+- 9/29 11:28 PM: ed2fa6d "Apixis World agent auto-provision on first sign-in". It added `src/lib/apixis-world*.ts`, `src/lib/world-agent-server.ts`, `src/app/actions/world-agent.ts`, `src/components/apixis-welcome-card.tsx`, a CardFooter export in `ui/card.tsx`, and the /dashboard welcome card with Enter to `apixis.dev/enter?from=halaxis`. The commit message says 200 starter Ixis and Special Elite font on the card. Check this against the 1000 Ixis and no-restyle locks. Undo: `git revert ed2fa6d`.
+
+**Codex**
+- 9/30 1:22 AM: PR #14 (`codex/tester-readiness`), hardening shared-login return destinations, plus redirect regression tests. Undo: revert 109bf33.
+- 10/2 2:22 AM: PR #18 (`codex/companies-tab-20261002`), adding the Apixis Companies page (/companies). Undo: revert 71984c5.
+- 10/2 2:47 AM: PR #19, refining the Companies card motion and copy. Undo: revert dcd14d6.
+- 10/2 3:19 AM: PR #20, fixing the Recovra link on /companies. Undo: revert 5bc508c.
+
+**Claude (`claude/awesome-newton-3tygzi`)**
+- 9/30 2:33 AM: PR #15, re-syncing the Apixis kits: login (`verifyOtp` type email), Wallet SDK v3.1, and the world kit (15 clients, 1,000 starter Ixis). Undo: revert 3f1675c.
+- 9/30 3:23 AM: PR #16, adding the `typecheck` script for CI. Undo: revert 26fa0c8.
+- 10/1 8:56 PM: PR #17, making `.env.example` list every env var the code reads. Undo: revert 9fc8c5c.
+
+**Juno (`junoai/*`)**
+- 9/28 4:08 AM: PR #10 (`junoai/ai-changelog`), adding `AI_CHANGELOG.md` and the rule that every AI logs its changes. Undo: revert d7b5481.
+- 9/28 4:58 AM: PR #11 (`junoai/ci`), adding `.github/workflows/ci.yml`, which calls the shared node-ci workflow. Undo: revert 2ce180b.
+- There are no `juno/*` branches in this repo.
+
+**PR closures**
+- The only Halaxis PR closed without merging in this window is #13. The family-wide closures (the 51 PRs) did not touch any other Halaxis PR.
+
+**Open items seen on 10/2 (not fixed, everything frozen)**
+- Hala chat is down: `/api/chat` returns 500 and `/api/health` shows `anthropic:false`, so the shared Anthropic key looks unset on Vercel.
+- The Stripe skeleton and `/landing.html` (plus the root `landing.html`) are still on main and still to be removed at unpark.
