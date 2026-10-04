@@ -48,3 +48,9 @@ Backfill of changes made since the last entry that weren't logged here. Times ar
 **Open items seen on 10/2 (not fixed, everything frozen)**
 - Hala chat is down: `/api/chat` returns 500 and `/api/health` shows `anthropic:false`, so the shared Anthropic key looks unset on Vercel.
 - The Stripe skeleton and `/landing.html` (plus the root `landing.html`) are still on main and still to be removed at unpark.
+
+## 2026-10-04 (CT) — Grok: owner admin allowlist (alaidaroosawad@gmail.com, awad@apixis.dev)
+- What: Awad's rule — both owner emails are Halaxis admin as soon as they sign in with a verified email, by any method. Halaxis has one admin check, `isAdmin()` in `src/lib/auth-helpers.ts` (a hardcoded list with only awad@apixis.dev, exact-case, no verification check). It now uses both owner emails + optional `ADMIN_EMAILS` env (comma-separated), case-insensitive, and needs a confirmed email (`mailer_autoconfirm` is off on this Supabase project). No page calls `isAdmin()` yet, so nothing visible changes. Nobody else's access changed. No accounts or passwords were created.
+- Where: `src/lib/auth-helpers.ts`; Vercel env `ADMIN_EMAILS` on project `halaxis` (production + preview).
+- Who: Grok.
+- Undo: `git revert <squash SHA>` and delete `ADMIN_EMAILS` in Vercel → halaxis → Settings → Environment Variables.
