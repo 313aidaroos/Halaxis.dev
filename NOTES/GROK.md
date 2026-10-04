@@ -1,4 +1,11 @@
-Grok Bot (Developer Bot hub + product leads) notes. Every change Grok Bot makes to this product (code, env, database, deploys) gets a dated entry here so Claude, Hermes and Codex stay on the same page.
+## 2026-10-04 summary
+## 2026-10-04 summary
+
+- **Grok:** added the two-owner verified admin allowlist.
+- **Lead:** prepared the Feed tab and shared visual fixes on a branch; not a merged live-site change.
+- **Claude/Hermes/Codex/Juno:** Claude, Hermes, and Juno had no commits or merged PRs in this repo on 2026-10-04 CT.
+
+
 
 ## 2026-09-27 (CT) — Developer Bot (hub)
 - Wallet registration: added `halaxis` to `wallet_api_clients` in Supabase project `kzneeksminozmhnqaaun`, with `require_sso=false`.
@@ -54,3 +61,14 @@ Backfill of changes made since the last entry that weren't logged here. Times ar
 - Where: `src/lib/auth-helpers.ts`; Vercel env `ADMIN_EMAILS` on project `halaxis` (production + preview).
 - Who: Grok.
 - Undo: `git revert <squash SHA>` and delete `ADMIN_EMAILS` in Vercel → halaxis → Settings → Environment Variables.
+## 2026-10-04 catch-up provenance (CT)
+
+The entries below record the day's observed commits and merged PRs. Existing detailed entries above remain the change descriptions; this section supplies exact provenance and undo pointers.
+
+### Commits
+- `8d65f14` (2026-10-04T17:47:33-05:00, 313aidaroos; alaidaroosawad@gmail.com) — Owner admin allowlist: both owner emails, ADMIN_EMAILS, case-insensitive, verified only (#21). Undo: undo via the merged PR below: git revert 8d65f14.
+- `ac213b7` (2026-10-04T18:00:33-05:00, 313aidaroos; 313aidaroos@users.noreply.github.com) — Feed tab: Socixis Social family feed at /feed (shared feed-client, Halaxis skin). Undo: no main change; close/delete the branch (or revert the branch commit before reuse).
+- `cbc9996` (2026-10-04T18:09:17-05:00, 313aidaroos; 313aidaroos@users.noreply.github.com) — Feed: apply Socixis visual fixes (text posts size to content, modals on top, 'You' tab). Undo: no main change; close/delete the branch (or revert the branch commit before reuse).
+
+### Merged PRs
+- PR #21, merge `8d65f14`, `grok/owner-admin-allowlist` → `main`, merged 2026-10-04 CT by 313aidaroos: Owner admin allowlist for alaidaroosawad@gmail.com and awad@apixis.dev. Undo: `git revert 8d65f14`.
