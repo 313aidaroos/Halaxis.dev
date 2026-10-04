@@ -34,14 +34,14 @@ export function SiteHeader() {
           <span className="sr-only">{siteConfig.name} home</span>
         </Link>
 
-        <nav className="hidden items-center gap-6 xl:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-5 xl:flex" aria-label="Primary">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               aria-current={pathname === item.href ? "page" : undefined}
               className={cn(
-                "text-sm text-muted-foreground transition-colors hover:text-foreground",
+                "whitespace-nowrap text-sm text-muted-foreground transition-colors hover:text-foreground",
                 pathname === item.href && "text-gold",
               )}
             >
@@ -52,12 +52,12 @@ export function SiteHeader() {
 
         <div className="hidden xl:flex items-center gap-3">
           <ApixisWalletChip className="text-sm text-muted-foreground" />
-          <a href={buyIxisHref} className="text-sm text-foreground px-3 py-2">
+          <a href={buyIxisHref} className="whitespace-nowrap text-sm text-foreground px-2 py-2">
             Buy Ixis
           </a>
           <Link
             href="/auth/login"
-            className="text-sm text-foreground px-3 py-2"
+            className="whitespace-nowrap text-sm text-foreground px-2 py-2"
           >
             Sign in
           </Link>

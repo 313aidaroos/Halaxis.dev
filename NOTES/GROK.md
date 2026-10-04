@@ -54,3 +54,9 @@ Backfill of changes made since the last entry that weren't logged here. Times ar
 - Where: `src/lib/auth-helpers.ts`; Vercel env `ADMIN_EMAILS` on project `halaxis` (production + preview).
 - Who: Grok.
 - Undo: `git revert <squash SHA>` and delete `ADMIN_EMAILS` in Vercel → halaxis → Settings → Environment Variables.
+
+## 2026-10-04 (CT) — Grok: Feed tab on Halaxis
+- What: new public `/feed` page with the Socixis Social family feed: one mixed For You feed from every Apixis company (including the agents' daily reports; never filtered by site), Following, Search · Trending, video/photo/text posts, follow, like, threaded comments, save, share, report, tips 10/50/100 Ixis, boost 250 Ixis/day. Browsing is public; acting needs Apixis ID sign-in. The Cixy auto-post toggle is hidden on Halaxis (only the agent toggle shows). "Feed" added to the header nav.
+- Where: `src/feed-client/` (shared client), `src/app/feed/` (page with PageHero, Halaxis skin from the ui primitives, `feed.css` on the theme tokens), `src/app/api/feed-session/route.ts` (mints the browser feed token server-side with `APIXIS_WORLD_KEY`), `src/lib/site.ts` (nav item), `src/components/site-header.tsx` (nowrap + gap-5 so the longer nav stays on one line at 1440px), `src/lib/__tests__/feed-client.test.mts`, `test` script in package.json.
+- Who: Grok (for Awad). No DB/env/Wallet changes. No SVGs.
+- Undo: `git revert <merge sha>` of this PR.

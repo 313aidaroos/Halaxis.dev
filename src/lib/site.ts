@@ -21,6 +21,7 @@ export const navItems = [
   { href: "/compliance", label: "Principles" },
   { href: "/about", label: "About" },
   { href: "/companies", label: "Apixis Companies" },
+  { href: "/feed", label: "Feed" },
 ] as const;
 
 export const legalNavItems = [

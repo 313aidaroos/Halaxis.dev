@@ -37,3 +37,7 @@ Entry format:
 ## 2026-10-02 — Claude (Claude Code)
 - Changed: `.env.example` now lists every env var the code reads (missing names appended with a one-line note each).
 - Why: so the owner can add keys in Vercel from one complete list. No code changed.
+
+## 2026-10-04 — Grok
+- Changed: Feed tab (src/app/feed/, src/feed-client/, src/app/api/feed-session, nav item, header nowrap, src/lib/__tests__/feed-client.test.mts, package.json test script)
+- Why: Awad asked for the Socixis Social family feed as a Feed tab on every Apixis site.
