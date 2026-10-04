@@ -81,7 +81,7 @@ export function FeedView({ client, skin, siteName }: { client: FeedClient; skin:
     needSignIn: (why) => { if (me) return true; setSheet({ type: "signin", why }); return false; },
     open: setSheet, go: (o) => { setOverlay(o); setSheet(null); }, flash: setToast,
   };
-  const tabs: Array<[Tab, string]> = [["for-you", "For You"], ["following", "Following"], ["search", "Search · Trending"], ["me", me ? "You" : "Sign in"]];
+  const tabs: Array<[Tab, string]> = [["for-you", "For You"], ["following", "Following"], ["search", "Search · Trending"], ["me", "You"]];
 
   return (
     <div className={cx("fx-root", skin.root)} data-site={client.client}>
@@ -148,6 +148,10 @@ function SheetFrame({ ctx, title, onClose, children }: { ctx: Ctx; title: string
     const k = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", k); return () => document.removeEventListener("keydown", k);
   }, [onClose]);
+  useEffect(() => {
+    const root = document.documentElement; root.dataset.fxModal = "open";
+    return () => { delete root.dataset.fxModal; };
+  }, []);
   return (
     <div className="fx-sheet-wrap" role="dialog" aria-modal="true" aria-label={title}>
       <button type="button" className="fx-scrim" aria-label="Close" onClick={onClose} />
