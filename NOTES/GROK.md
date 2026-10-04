@@ -1,5 +1,20 @@
 Grok Bot (Developer Bot hub + product leads) notes. Every change Grok Bot makes to this product (code, env, database, deploys) gets a dated entry here so Claude, Hermes and Codex stay on the same page.
 
+## 2026-10-04 summary
+
+- **Grok:** added the two-owner verified admin allowlist.
+- **Lead:** prepared the Feed tab and shared visual fixes on a branch; not a merged live-site change.
+- **Claude:** merged PR #23 (`c7f2242`) around 6:30 PM CT, adding the full-portfolio review to `NOTES/CLAUDE.md` and `AI_CHANGELOG.md` (notes/docs only).
+- **Hermes:** no 2026-10-04 commit or merged PR identified in this repository.
+- **Juno:** no 2026-10-04 commit or merged PR identified in this repository.
+
+## Catch-up correction — 2026-10-04 (CT)
+
+Claude activity was present; the earlier “no Claude activity” line was incorrect. Each item below has an undo pointer.
+
+- **Claude, 2026-10-04 6:31 PM CT — PR #23, merge `c7f22424fc0fdb3bbf86ab28d6161cf511f046dd`:** notes: Claude full-portfolio review 2026-10-04 (NOTES/CLAUDE.md, AI_CHANGELOG); added `NOTES/CLAUDE.md` and `AI_CHANGELOG.md` (notes/docs only). Undo: `git revert c7f22424fc0fdb3bbf86ab28d6161cf511f046dd`.
+- **2026-10-04 6:45 PM CT — 313aidaroos:** `notes: log Claude #23 + 10/4 verification (Grok) [skip ci]` landed as `14cbbd94d7f2ebe636ac5d4bcd3f19c69f8f54c6`. Where: commit `14cbbd94d7f2ebe636ac5d4bcd3f19c69f8f54c6`. Undo: `git revert 14cbbd94d7f2ebe636ac5d4bcd3f19c69f8f54c6`.
+
 ## 2026-09-27 (CT) — Developer Bot (hub)
 - Wallet registration: added `halaxis` to `wallet_api_clients` in Supabase project `kzneeksminozmhnqaaun`, with `require_sso=false`.
 - Callback URLs registered: https://halaxis.vercel.app/auth/apixis/callback.
@@ -73,3 +88,25 @@ Backfill of changes made since the last entry that weren't logged here. Times ar
 - Where: feed client `FeedView.tsx` (tab label) and the shared layout section of the site's feed CSS.
 - Who: Grok Bot (for Awad). No merge, no production deploy.
 - Undo: revert this commit on the PR branch.
+## 2026-10-04 catch-up provenance (CT)
+
+The entries below record the day's observed commits and merged PRs. Existing detailed entries above remain the change descriptions; this section supplies exact provenance and undo pointers.
+
+### Commits
+- `8d65f14` (2026-10-04T17:47:33-05:00, 313aidaroos; alaidaroosawad@gmail.com) — Owner admin allowlist: both owner emails, ADMIN_EMAILS, case-insensitive, verified only (#21). Undo: undo via the merged PR below: git revert 8d65f14.
+- `ac213b7` (2026-10-04T18:00:33-05:00, 313aidaroos; 313aidaroos@users.noreply.github.com) — Feed tab: Socixis Social family feed at /feed (shared feed-client, Halaxis skin). Undo: no main change; close/delete the branch (or revert the branch commit before reuse).
+- `cbc9996` (2026-10-04T18:09:17-05:00, 313aidaroos; 313aidaroos@users.noreply.github.com) — Feed: apply Socixis visual fixes (text posts size to content, modals on top, 'You' tab). Undo: no main change; close/delete the branch (or revert the branch commit before reuse).
+
+### Merged PRs
+- PR #21, merge `8d65f14`, `grok/owner-admin-allowlist` → `main`, merged 2026-10-04 CT by 313aidaroos: Owner admin allowlist for alaidaroosawad@gmail.com and awad@apixis.dev. Undo: `git revert 8d65f14`.
+
+## 2026-10-04 (CT) — Halaxis Lead (Grok): Claude's 10/4 work, logged and verified
+- **What Claude changed:** PR #23 (`claude/great-fermi-6brq7a`), merged 10/4 6:31 PM CT as c7f2242. It is notes only: a new `NOTES/CLAUDE.md` (read-only portfolio review) and a new line in `AI_CHANGELOG.md`. Claude made no code, env, DB or deploy changes here. Undo: `git revert c7f2242`.
+- **Verified live at 6:45 PM CT:** the pages, /companies and /screen return 200. /dashboard redirects to sign-in. Apixis ID start returns 302 to Wallet SSO. The Wallet balance returns 401 when signed out. `/api/health` shows anthropic:true, and Hala chat answers again (it was down on 10/2). Every /companies link returns 200. The repo has no SVG files, and Cixy appears nowhere in the code. The religious greeting appears only on Halaxis, which is allowed.
+- **Open, not changed by me:**
+  - `src/lib/apixis-world-agent.ts` is an old kit copy. Only its comment still says "200 in-world Ixis", and the actual grant happens on Apixis.dev. Re-copy it from canonical rather than editing by hand.
+  - /companies still links Launchixis and Ominix (`nexxis-tau.vercel.app`), which the footer brief excludes. Codex owns that page.
+  - Claude's notes name Supabase project `zjlorazckuclrefcndxi`, which differs from the earlier slot `nglaoalnxumyohiwbpcv`. The hub should confirm which one is canonical.
+  - There is no `test` script. `/api/agents/tick` has no cron. The `landing.html` copies and the Stripe skeleton (gated) are still there.
+  - Open PRs: #12 (footer, conflicting) and #22 (feed tab). /feed is not live yet.
+- **Who:** Halaxis Lead (Grok). This commit changes only this file.

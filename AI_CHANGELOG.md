@@ -41,3 +41,6 @@ Entry format:
 ## 2026-10-04 — Grok
 - Changed: Feed tab (src/app/feed/, src/feed-client/, src/app/api/feed-session, nav item, header nowrap, src/lib/__tests__/feed-client.test.mts, package.json test script)
 - Why: Awad asked for the Socixis Social family feed as a Feed tab on every Apixis site.
+## 2026-10-04 — Claude (Claude Code, full-portfolio review)
+- Changed: `NOTES/CLAUDE.md` — this repo's slice of the 24-repo review (what is live, what is open, who owns each item, drift found). No code, env, database or deploy changes.
+- Why: Awad asked for every repo to be read twice with a done / to-do / owner status, and for the notes in each repo to be updated. Notes only; Awad approved the merge on 2026-10-04.
