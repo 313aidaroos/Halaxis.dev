@@ -72,3 +72,14 @@ The entries below record the day's observed commits and merged PRs. Existing det
 
 ### Merged PRs
 - PR #21, merge `8d65f14`, `grok/owner-admin-allowlist` → `main`, merged 2026-10-04 CT by 313aidaroos: Owner admin allowlist for alaidaroosawad@gmail.com and awad@apixis.dev. Undo: `git revert 8d65f14`.
+
+## 2026-10-04 (CT) — Halaxis Lead (Grok): Claude's 10/4 work, logged and verified
+- **What Claude changed:** PR #23 (`claude/great-fermi-6brq7a`), merged 10/4 6:31 PM CT as c7f2242. It is notes only: a new `NOTES/CLAUDE.md` (read-only portfolio review) and a new line in `AI_CHANGELOG.md`. Claude made no code, env, DB or deploy changes here. Undo: `git revert c7f2242`.
+- **Verified live at 6:45 PM CT:** the pages, /companies and /screen return 200. /dashboard redirects to sign-in. Apixis ID start returns 302 to Wallet SSO. The Wallet balance returns 401 when signed out. `/api/health` shows anthropic:true, and Hala chat answers again (it was down on 10/2). Every /companies link returns 200. The repo has no SVG files, and Cixy appears nowhere in the code. The religious greeting appears only on Halaxis, which is allowed.
+- **Open, not changed by me:**
+  - `src/lib/apixis-world-agent.ts` is an old kit copy. Only its comment still says "200 in-world Ixis", and the actual grant happens on Apixis.dev. Re-copy it from canonical rather than editing by hand.
+  - /companies still links Launchixis and Ominix (`nexxis-tau.vercel.app`), which the footer brief excludes. Codex owns that page.
+  - Claude's notes name Supabase project `zjlorazckuclrefcndxi`, which differs from the earlier slot `nglaoalnxumyohiwbpcv`. The hub should confirm which one is canonical.
+  - There is no `test` script. `/api/agents/tick` has no cron. The `landing.html` copies and the Stripe skeleton (gated) are still there.
+  - Open PRs: #12 (footer, conflicting) and #22 (feed tab). /feed is not live yet.
+- **Who:** Halaxis Lead (Grok). This commit changes only this file.
