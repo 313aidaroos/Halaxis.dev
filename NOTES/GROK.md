@@ -91,3 +91,10 @@ The entries below record the day's observed commits and merged PRs. Existing det
   - There is no `test` script. `/api/agents/tick` has no cron. The `landing.html` copies and the Stripe skeleton (gated) are still there.
   - Open PRs: #12 (footer, conflicting) and #22 (feed tab). /feed is not live yet.
 - **Who:** Halaxis Lead (Grok). This commit changes only this file.
+
+## 2026-10-04 (CT) — Grok (Developer Bot hub): Cixy persona v2 sync + Ominix link
+- What: Ominix link on /companies now https://ominix-app.vercel.app (URL string only; no SVG/design change). No Cixy kit copy in this repo; Hala's own religious/halal rules untouched.
+- Files: src/app/companies/page.tsx 
+- Why: Awad's lock — no religious content in Cixy on any product except Halaxis; she declines only genuinely harmful, deceptive or illegal content, never on religious grounds (9/30). Kit = ApixisWallet `sdk/apixis-cixy.*` v2 (3a22244, PR #50) with two hub edits pending canonical: the religion-derived "clean recommendations" rule (gambling) is replaced by "decline only harmful, deceptive or illegal, never on religious grounds", and the character line reads "draws on Arab culture". Ominix links point to https://ominix-app.vercel.app (checked 200 on 2026-10-04 ~6:55 PM CT).
+- Who: Grok (Developer Bot hub), branch `grok/cixy-v2-20261004`, one squash-merged PR.
+- Undo: `git revert <squash sha of this PR>` (sha recorded in the PR), then redeploy prod.
