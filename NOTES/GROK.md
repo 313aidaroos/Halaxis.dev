@@ -130,3 +130,9 @@ Recorded by Grok (Developer Bot, notes and status sync at 9:25 PM CT). Every cha
 
 - 7:06 PM, PR #24, `611e636`: Cixy persona v2 sync (no religious content outside Halaxis) + Ominix link to ominix-app.vercel.app. Undo: `git revert 611e636` on `main`, then redeploy production.
 - 7:17 PM, PR #22, `de616d4`: Feed tab: Socixis Social family feed. Undo: `git revert de616d4` on `main`, then redeploy production.
+
+## 2026-10-04 (CT) — Grok: new accounts only through Apixis ID (branch `grok/apixis-id-only-signup`)
+- Approval: Awad said go at 10:00 PM CT, Oct 4 2026 ("every Ixis product must allow NEW account creation only through Apixis ID", the shared Wallet SSO at apixis-wallet.vercel.app/sso/authorize).
+- What changed: The email-link endpoint used by `/auth/login` (`POST /api/auth/signup`, which despite its name only sends magic links) now uses `shouldCreateUser: false`: existing accounts still get a link; a brand-new email gets "No Halaxis account uses this email yet… use Sign in with Apixis" (+ `apixis_id_url`, 404). `/auth/login` hint under the email button now says the link is for existing accounts and new people use Sign in with Apixis. No password signup exists; password sign-in unchanged. (`/login` and `/signup` are not routes here; both 404 as before.)
+- Not changed: Supabase project setting "Allow new users to sign up" stays ON (Apixis SSO callback may create users through it). Theme, layout and styles unchanged. No Wallet, Stripe or Cixy files touched.
+- Undo: `git revert <squash sha of this PR>` (the sha is recorded in the PR and in /workspace/apixisid/STATUS.md on the box).

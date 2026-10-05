@@ -160,8 +160,8 @@ function LoginPageInner() {
                 </Button>
 
                 <p className="text-xs text-center text-muted-foreground">
-                  We&apos;ll send a secure email link. After signing in, create
-                  your personal agent and explore ventures.
+                  We&apos;ll send a secure email link to your existing account.
+                  New to Halaxis? Create your account with Sign in with Apixis.
                 </p>
               </form>
               </>
