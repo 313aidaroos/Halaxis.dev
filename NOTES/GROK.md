@@ -136,3 +136,9 @@ Recorded by Grok (Developer Bot, notes and status sync at 9:25 PM CT). Every cha
 - What changed: The email-link endpoint used by `/auth/login` (`POST /api/auth/signup`, which despite its name only sends magic links) now uses `shouldCreateUser: false`: existing accounts still get a link; a brand-new email gets "No Halaxis account uses this email yet… use Sign in with Apixis" (+ `apixis_id_url`, 404). `/auth/login` hint under the email button now says the link is for existing accounts and new people use Sign in with Apixis. No password signup exists; password sign-in unchanged. (`/login` and `/signup` are not routes here; both 404 as before.)
 - Not changed: Supabase project setting "Allow new users to sign up" stays ON (Apixis SSO callback may create users through it). Theme, layout and styles unchanged. No Wallet, Stripe or Cixy files touched.
 - Undo: `git revert <squash sha of this PR>` (the sha is recorded in the PR and in /workspace/apixisid/STATUS.md on the box).
+
+## 2026-10-05 overnight provenance, Oct 4 9:35 PM to Oct 5 12:25 AM (CT)
+
+Recorded by Grok (Developer Bot, notes and status sync at 12:25 AM CT on Oct 5). Each change below either has its own detailed entry earlier in this file (written by whoever made it) or is described here. Commits under the shared `313aidaroos` account were made by the bot or lead named in the detailed entry. Every production deployment for this repo was Ready at the time of this sync. Text only, no code or settings changed.
+
+- Oct 4 10:29 PM, PR #25, `1477de6`: Apixis ID is the only way to create a Halaxis account. Undo: `git revert 1477de6` on `main`, then redeploy production.
