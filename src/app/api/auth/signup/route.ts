@@ -12,8 +12,9 @@ const emailSchema = z.object({
 
 /**
  * POST /api/auth/signup
- * Send a magic-link signup email.
- * Not creating accounts; just sending passwordless links.
+ * Send a magic-link sign-in email to an EXISTING account (used by /auth/login).
+ * 2026-10-04 (Grok, Apixis ID only): shouldCreateUser is false, so this never creates an account.
+ * New accounts are created with Apixis ID (/auth/apixis/start).
  */
 export async function POST(request: Request) {
   const limited = rateLimit(clientKey(request, "signup"), 5, 10 * 60 * 1000);
@@ -54,13 +55,22 @@ export async function POST(request: Request) {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        shouldCreateUser: true,
+        shouldCreateUser: false, // existing accounts only; new accounts use Apixis ID
         emailRedirectTo: redirectTo || defaultRedirect,
       },
     });
 
     if (error) {
       console.error("[auth/signup] signInWithOtp error:", error);
+      if (/signups? not allowed|otp_disabled|user not found/i.test(`${error.code ?? ""} ${error.message}`)) {
+        return NextResponse.json(
+          {
+            error: "No Halaxis account uses this email yet. New here? Use Sign in with Apixis to create your account.",
+            apixis_id_url: "/auth/apixis/start?next=%2F",
+          },
+          { status: 404 },
+        );
+      }
       return NextResponse.json(
         { error: error.message || "Failed to send magic link." },
         { status: 400 },
