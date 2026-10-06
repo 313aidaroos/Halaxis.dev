@@ -48,3 +48,7 @@ Entry format:
 ## 2026-10-05 — Halaxis Lead (Hermes Agent)
 - Changed: src/components/payment-panel.tsx (line 36: "coming soon" → honest "membership opens after Awad sets tier amounts"), src/lib/apixis-world-agent.ts re-copied from Apixis.dev (1,000 Ixis comment, aidaroosholding client), NOTES/SYNC_2026-10-05.md (pass-2 comprehensive read report).
 - Why: family rule violation ("coming soon" behind a price breaks honesty); world-agent kit drift (200 comment outdated per D11); pass-2 read per Awad 2026-10-05 directive. @hermes feedback: Halaxis 40% ready, two Awad decisions needed (tier amounts, TAVILY_API_KEY).
+
+## 2026-10-06 — Claude (family lead): AI Receptionist notes (D18)
+- Changed: AI Receptionist section in the family notes (see `docs/AI_RECEPTIONIST.md` in ApixisWallet); notes only, no code.
+- Why: Awad approved an AI Receptionist add-on at $100/month for every customer-facing family site and asked every bot and agent to follow one plan.
