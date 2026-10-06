@@ -44,3 +44,7 @@ Entry format:
 ## 2026-10-04 — Claude (Claude Code, full-portfolio review)
 - Changed: `NOTES/CLAUDE.md` — this repo's slice of the 24-repo review (what is live, what is open, who owns each item, drift found). No code, env, database or deploy changes.
 - Why: Awad asked for every repo to be read twice with a done / to-do / owner status, and for the notes in each repo to be updated. Notes only; Awad approved the merge on 2026-10-04.
+
+## 2026-10-05 — Halaxis Lead (Hermes Agent)
+- Changed: src/components/payment-panel.tsx (line 36: "coming soon" → honest "membership opens after Awad sets tier amounts"), src/lib/apixis-world-agent.ts re-copied from Apixis.dev (1,000 Ixis comment, aidaroosholding client), NOTES/SYNC_2026-10-05.md (pass-2 comprehensive read report).
+- Why: family rule violation ("coming soon" behind a price breaks honesty); world-agent kit drift (200 comment outdated per D11); pass-2 read per Awad 2026-10-05 directive. @hermes feedback: Halaxis 40% ready, two Awad decisions needed (tier amounts, TAVILY_API_KEY).
