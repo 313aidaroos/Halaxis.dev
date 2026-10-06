@@ -33,7 +33,7 @@ export function PaymentPanel() {
           </a>
         </p>
         <p className="text-sm text-muted-foreground">
-          Redemption of Ixis on Halaxis is coming soon. For now, express interest on the{" "}
+          Halaxis membership opens after Awad sets tier amounts. Express interest on the{" "}
           <Link href="/contact" className="text-gold underline-offset-4 hover:underline">
             accredited-investor form
           </Link>.
