@@ -5,6 +5,7 @@ import { LegalBanner } from "@/components/legal-banner";
 import { PageHero } from "@/components/page-hero";
 import { ScreenForm } from "@/components/screen-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { pricingCopy } from "@/lib/pricing";
 import { HALAXIS_V1_STANDARD } from "@/lib/shariah/standard";
 
 export const metadata: Metadata = {
@@ -60,6 +61,10 @@ export default function ScreenPage() {
                 </li>
               </ul>
               <p>{HALAXIS_V1_STANDARD.notAFatwa}</p>
+              <p>{pricingCopy.stockChecker}</p>
+              <p>{pricingCopy.fund}</p>
+              <p>{pricingCopy.advisors}</p>
+              <p>{pricingCopy.notCertification}</p>
             </CardContent>
           </Card>
         </div>

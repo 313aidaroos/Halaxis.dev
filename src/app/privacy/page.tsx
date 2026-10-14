@@ -40,9 +40,12 @@ export default function PrivacyPage() {
           account numbers, government IDs, or other sensitive data.
         </p>
         <p>
-          Stripe is not used while <code>ENABLE_PAYMENTS</code> is false. If
-          payments are later enabled, Stripe will process payment data under
-          Stripe’s terms.
+          Investment-fund payments stay off while <code>ENABLE_PAYMENTS</code> is
+          false. If stock-checker plan checkout is turned on
+          (<code>HALAXIS_PLANS_CHECKOUT</code>), card payments are processed by
+          Stripe on the shared Apixis Dev LLC account. Halaxis stores a receipt
+          and a ledger line for that purchase, not the card number. Ixis is
+          bought only in Apixis Wallet.
         </p>
         <p>
           Contact: {siteConfig.email}.{" "}

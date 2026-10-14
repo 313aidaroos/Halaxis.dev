@@ -12,7 +12,7 @@ This release ships a working **Halaxis v1 Shariah screen** (`/screen`, `POST /ap
 | UI | Tailwind CSS **3.4**, shadcn-style components |
 | Validation / data | Zod, TanStack Query |
 | Auth / DB | Supabase (`@supabase/ssr` + `supabase-js`) — client + SQL stubs only |
-| Payments | `stripe` Checkout + webhook skeleton; `ENABLE_PAYMENTS=false` by default |
+| Payments | Stock-checker plans: Stripe card or Wallet Ixis, behind `HALAXIS_PLANS_CHECKOUT=false`. Fund stays behind `ENABLE_PAYMENTS=false` |
 | AI | Small `AI_PROVIDER=anthropic\|openai` interface (`src/lib/ai`) |
 | Email | Resend (`RESEND_API_KEY`, `EMAIL_FROM`) |
 | Host | Vercel (`vercel.json`) |
@@ -38,7 +38,8 @@ Optional `.env.local` values (see `.env.example` for the full Contraxis-shaped l
 - `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_*`
 - `AI_PROVIDER`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `AI_MODEL`
 - `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_TO`
-- `ENABLE_PAYMENTS` — must be the string `true` to expose Checkout
+- `HALAXIS_PLANS_CHECKOUT` — must be the string `true` to sell the stock checker (card or Ixis)
+- `ENABLE_PAYMENTS` — fund money only; keep `false` until counsel clears solicitation
 
 ## Shariah screen (the product)
 
@@ -64,22 +65,27 @@ Production without Supabase or Resend returns `503`.
 
 `POST /api/chat` streams plain text from `src/lib/ai/provider.ts`. The system prompt refuses personalized advice and steers visitors to `/contact`. In-memory rate limit: 8 requests / 10 minutes / IP. Configure `AI_PROVIDER` + the matching API key; omit keys to keep chat disabled (UI still shows a graceful error).
 
-## Stripe (gated)
+## Plans (stock checker) and the fund
 
-- Routes: `POST /api/stripe/checkout`, `POST /api/stripe/webhook`
-- Pages: `/checkout/success`, `/checkout/cancel`
-- UI on `/contact` stays hidden/disabled unless `ENABLE_PAYMENTS=true`
-- Never pass `payment_method_types` (dynamic payment methods)
-- Price IDs come from `STRIPE_PRICE_ONBOARDING`, then `STRIPE_PRICE_ALLOCATION` or `STRIPE_PRICE_SUBSCRIPTION`
-- Apixis.dev **test mode** already has a Halaxis placeholder (do not treat as live): product `prod_VDKg3OJ4Mhbsjy` (Halaxis Investor Onboarding, $0/mo) and price `price_1UCu18BM0XItOdByzHvFHAMk` (`STRIPE_PRICE_ONBOARDING` in `.env.example`). `ENABLE_PAYMENTS` stays `false`.
+Locked prices live in `NOTES/PRICING.md` and `src/lib/pricing.ts`.
 
-### Stripe Dashboard steps (manual)
+- Stock checker: 3 free checks (assumed) — TBD, then $50 one-time activation and $50/month. Card or Ixis (100 Ixis = $1).
+- Card: `POST /api/plans/checkout` opens Stripe Checkout on the shared Apixis Dev LLC account. Metadata is `product=halaxis` and `tier`. Price IDs are `STRIPE_PRICE_HALAXIS_STOCK_CHECKER_ACTIVATION` and `STRIPE_PRICE_HALAXIS_STOCK_CHECKER_MONTHLY` (blank until Developer Bot sets them). Webhook: `POST /api/stripe/webhook`.
+- Ixis: the same route redeems Wallet product keys `halaxis.stock_checker.activation` and `halaxis.stock_checker.monthly`. Short of Ixis, the buyer is sent to Wallet `/buy?product=halaxis`.
+- Every charged purchase writes one row in `plan_receipts` and one row in `plan_ledger` (migration `supabase/migrations/20261014000000_plan_receipts_ledger.sql`, not applied from this repo).
+- `HALAXIS_PLANS_CHECKOUT` defaults off. The buttons stay disabled until it is the string `true`.
+- Fund: no price, waitlist only. `ENABLE_PAYMENTS` stays `false`. Fund money is not a plan tier.
+- Banks and advisors: contact sales.
+- Never pass `payment_method_types`. Never log Stripe keys, webhook payloads, or signatures.
+- Return pages: `/plans/checkout/success`, `/plans/checkout/cancel`.
 
-1. Use the existing Apixis.dev Stripe **test** account (restricted key preferred over a full secret key). The onboarding placeholder product/price above is already created in test mode.
-2. Create additional products/prices only when counsel says a charge is lawful. Copy any extra `price_...` id into `STRIPE_PRICE_ALLOCATION` if needed.
-3. Add `https://<your-domain>/api/stripe/webhook` as a webhook endpoint. Events: `checkout.session.completed` (and optionally async/expired). Copy the signing secret to `STRIPE_WEBHOOK_SECRET`.
-4. Set `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`.
-5. Leave `ENABLE_PAYMENTS` unset or `false` until SEC/counsel clearance. Then set `ENABLE_PAYMENTS=true` and redeploy.
+### Stripe Dashboard steps (manual, Developer Bot)
+
+1. On the shared Apixis Dev LLC Stripe account, create the $50 one-time price and the $50/month price. Paste the price IDs into the two `STRIPE_PRICE_HALAXIS_STOCK_CHECKER_*` env vars. Leave them blank until then.
+2. Add `https://<your-domain>/api/stripe/webhook`. Events: `checkout.session.completed` and `checkout.session.async_payment_succeeded`. Copy the signing secret to `STRIPE_WEBHOOK_SECRET`.
+3. Apply the plan receipt migration before turning checkout on.
+4. Add the two Wallet SKUs in ApixisWallet `lib/catalog.ts` before Ixis redemption can succeed.
+5. Leave `HALAXIS_PLANS_CHECKOUT` unset or `false` until those pieces are in place. Leave `ENABLE_PAYMENTS` false until counsel clears the fund.
 
 ## Vercel deploy
 
@@ -96,15 +102,17 @@ Production without Supabase or Resend returns `503`.
 | Supabase trio | Optional (falls back to Resend / dev log) | Yes for durable waitlist |
 | `RESEND_API_KEY`, `EMAIL_FROM` | Optional | Recommended if no DB |
 | AI keys | Optional | For `/api/chat` |
-| Stripe keys + `STRIPE_PRICE_*` | No | Only with `ENABLE_PAYMENTS=true` |
-| `ENABLE_PAYMENTS` | Keep `false` | `true` only after counsel |
+| Stripe keys + stock-checker price IDs | No | Only with `HALAXIS_PLANS_CHECKOUT=true` |
+| `HALAXIS_PLANS_CHECKOUT` | Keep `false` | `true` only after price IDs, webhook, and the receipt migration |
+| `ENABLE_PAYMENTS` | Keep `false` | Fund only, after counsel |
 
 ## Remaining manual steps
 
 - [x] Supabase project `halaxis` created; waitlist + screen tables applied
 - [x] Vercel env: Supabase trio, `NEXT_PUBLIC_APP_URL`, `ENABLE_PAYMENTS=false`
-- [ ] Stripe **test** onboarding placeholder already exists on Apixis.dev (`prod_VDKg3OJ4Mhbsjy` / `price_1UCu18BM0XItOdByzHvFHAMk`); create additional products/prices **only if** solicitation is cleared
-- [ ] Attach Stripe webhook
+- [ ] Create the two stock-checker Stripe prices and set the blank `STRIPE_PRICE_HALAXIS_STOCK_CHECKER_*` env vars
+- [ ] Attach the Stripe webhook and apply `20261014000000_plan_receipts_ledger.sql` before `HALAXIS_PLANS_CHECKOUT=true`
+- [ ] Leave `ENABLE_PAYMENTS` false (fund)
 - [ ] Configure `halaxis.dev` DNS
 - [ ] Counsel review of all `[Counsel-review placeholder]` copy, Privacy, Terms, and Risk
 - [ ] Confirm entity, adviser, and offering status before changing any “not accepting investments” language
