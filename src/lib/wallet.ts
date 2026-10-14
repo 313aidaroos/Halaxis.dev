@@ -7,8 +7,9 @@ import { siteConfig } from "@/lib/site";
  *   /buy?product=halaxis&return_url=<encoded https return>
  * Query key is `product` (not `origin`).
  * Cash credit happens only on Wallet. Ixis is closed-loop platform credit
- * and non-withdrawable. 100 Ixis = $1. Halaxis does not run a second Stripe
- * Checkout and must not invent a local Ixis balance.
+ * and non-withdrawable. 100 Ixis = $1. Halaxis does not sell Ixis and does
+ * not keep an Ixis balance. Non-fund plan card checkout (stock checker) uses
+ * the shared Apixis Stripe account behind HALAXIS_PLANS_CHECKOUT.
  */
 export const APIXIS_WALLET_URL = "https://apixis-wallet.vercel.app";
 
@@ -54,6 +55,6 @@ export function apixisWalletBuyUrl(): string {
  * That route expects the Wallet app's Supabase bearer token
  * (Authorization: Bearer <USER_SESSION_TOKEN>), not a Halaxis session.
  * The live handler currently returns null balances until Wallet auth is
- * connected. Do not invent shared auth, a second Stripe Checkout, or a
- * local Ixis ledger. Cash credit happens only on Wallet via its Stripe webhook.
+ * connected. Do not invent a local Ixis balance. Cash for Ixis packs is
+ * credited only on Wallet. Plan receipts are purchase records, not balances.
  */

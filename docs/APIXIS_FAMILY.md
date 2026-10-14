@@ -24,7 +24,9 @@ Lead developer: Claude (backend). Owner: Awad. The source of truth for the whole
 - The Wallet must register this callback: `https://<this-site-domain>/auth/apixis/callback`
 
 ## Halaxis note
-Halaxis has no Wallet SKUs yet, so "Buy Ixis" opens the Wallet itself (product=wallet). Add SKUs to ApixisWallet `lib/catalog.ts` (Awad approves prices) before selling Halaxis plans for Ixis.
+Halaxis has no Wallet SKUs yet, so "Buy Ixis" opens the Wallet itself (`/buy?product=halaxis`). Add SKUs to ApixisWallet `lib/catalog.ts` (Awad approves prices) before selling Halaxis plans for Ixis: `halaxis.stock_checker.activation` and `halaxis.stock_checker.monthly` (5,000 Ixis each; 100 Ixis = $1).
+
+Non-fund plan card checkout (stock checker only) uses the one shared Apixis Dev LLC Stripe account behind `HALAXIS_PLANS_CHECKOUT` (off unless exactly `true`). Session metadata is `product=halaxis` and `tier`. This site still does not sell Ixis or store an Ixis balance. Investment-fund money stays behind `ENABLE_PAYMENTS=false`.
 
 ## AI Receptionist: family add-on (D18). Read before anything phone-related
 

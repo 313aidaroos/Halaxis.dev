@@ -52,3 +52,7 @@ Entry format:
 ## 2026-10-06 — Claude (family lead): AI Receptionist notes (D18)
 - Changed: AI Receptionist section in the family notes (see `docs/AI_RECEPTIONIST.md` in ApixisWallet); notes only, no code.
 - Why: Awad approved an AI Receptionist add-on at $100/month for every customer-facing family site and asked every bot and agent to follow one plan.
+
+## 2026-10-14 — Grok (Cursor cloud agent)
+- Changed: Locked stock-checker prices on the existing contact, screen, home FAQ, and privacy pages. Non-fund checkout (Stripe card on the shared Apixis Dev LLC account, or Ixis via Apixis Wallet) behind `HALAXIS_PLANS_CHECKOUT` (off by default), with a receipt and ledger code path plus an unapplied migration. Removed the broken Stripe checkout button, old `/checkout` pages, and both `landing.html` copies. Added a Vercel cron for `/api/agents/tick`. Tests for pricing, flags, and the receipt ledger.
+- Why: Launch checklist items that do not need Awad's input. Fund money stays behind `ENABLE_PAYMENTS=false`. No Halal or Sharia certification claim. Signup stays Apixis ID only.

@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 
-import { isStripeConfigured, paymentsEnabled } from "@/lib/flags";
+import { isStripeConfigured, plansCheckoutEnabled } from "@/lib/flags";
+import { PLAN_TIERS, readPlanPriceId, type PlanTierId } from "@/lib/pricing";
 import { siteConfig } from "@/lib/site";
 
 let stripeClient: Stripe | null = null;
@@ -15,37 +16,64 @@ export function getStripe(): Stripe | null {
   return stripeClient;
 }
 
-export function getStripePriceId(
-  name: "ONBOARDING" | "ALLOCATION" | "SUBSCRIPTION" = "ONBOARDING",
-): string | undefined {
-  const key = `STRIPE_PRICE_${name}` as const;
-  const value = process.env[key];
-  return value || undefined;
-}
-
-export function assertPaymentsReady() {
-  if (!paymentsEnabled()) {
-    return {
-      ok: false as const,
-      status: 403,
-      error: "Payments are disabled until ENABLE_PAYMENTS=true and counsel clears solicitation.",
-    };
+export function assertPlansCardReady():
+  | { ok: true }
+  | { ok: false; status: 403 | 503; error: string } {
+  if (!plansCheckoutEnabled()) {
+    return { ok: false, status: 403, error: "Plan checkout is off." };
   }
   if (!getStripe()) {
-    return {
-      ok: false as const,
-      status: 503,
-      error: "Stripe is not configured.",
-    };
+    return { ok: false, status: 503, error: "Card checkout is not configured." };
   }
-  return { ok: true as const };
+  return { ok: true };
 }
 
-export function checkoutUrls() {
+/**
+ * Open Stripe Checkout for a non-fund plan on the shared Apixis Dev LLC account.
+ * Metadata is product=halaxis and the tier. Price ids come from env and stay blank until set.
+ * Errors returned to callers never include the secret key.
+ */
+export async function createPlanCheckoutSession(opts: {
+  owner: string;
+  tier: PlanTierId;
+}): Promise<{ ok: true; url: string } | { ok: false; status: number; error: string }> {
+  const ready = assertPlansCardReady();
+  if (!ready.ok) return ready;
+
+  const plan = PLAN_TIERS[opts.tier];
+  const price = readPlanPriceId(plan);
+  if (!price) {
+    return { ok: false, status: 503, error: "Card price is not configured." };
+  }
+
+  const stripe = getStripe();
+  if (!stripe) {
+    return { ok: false, status: 503, error: "Card checkout is not configured." };
+  }
+
   const base = siteConfig.url;
-  return {
-    success: `${base}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel: `${base}/checkout/cancel`,
-  };
+  const owner = opts.owner.trim();
+  try {
+    const session = await stripe.checkout.sessions.create({
+      mode: plan.kind === "subscription" ? "subscription" : "payment",
+      line_items: [{ price, quantity: 1 }],
+      success_url: `${base}/plans/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${base}/plans/checkout/cancel`,
+      client_reference_id: owner.slice(0, 200),
+      metadata: {
+        product: "halaxis",
+        tier: plan.id,
+        owner_ref: owner.slice(0, 500),
+      },
+      ...(plan.kind === "subscription"
+        ? { subscription_data: { metadata: { product: "halaxis", tier: plan.id } } }
+        : {}),
+    });
+    if (!session.url) {
+      return { ok: false, status: 502, error: "Card checkout did not start." };
+    }
+    return { ok: true, url: session.url };
+  } catch {
+    return { ok: false, status: 502, error: "Card checkout failed." };
+  }
 }
-

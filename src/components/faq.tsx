@@ -8,7 +8,11 @@ import {
 const items = [
   {
     q: "Are you accepting investments?",
-    a: "No. Halaxis is not publicly accepting investments. This site collects accredited-investor interest only. Payment flows remain disabled until ENABLE_PAYMENTS is turned on after required counsel and regulatory steps.",
+    a: "No. The fund has no price and is waitlist only. Investment-fund money stays off until ENABLE_PAYMENTS is turned on after required counsel and regulatory steps. This site collects accredited-investor interest only. Submitting the form is not a subscription.",
+  },
+  {
+    q: "What does the stock checker cost?",
+    a: "3 free checks (assumed) — TBD. After that, the Halal stock checker is $50 one-time activation plus $50 per month, renewing automatically, for unlimited checks and alerts. Pay by card or with Ixis (100 Ixis = $1). That checkout stays off until HALAXIS_PLANS_CHECKOUT is turned on. It is a tool fee, not a fund subscription, and not a Halal or Sharia certification. Banks and advisors: contact sales.",
   },
   {
     q: "Is this an offer of securities?",

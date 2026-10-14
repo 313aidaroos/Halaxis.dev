@@ -1,6 +1,18 @@
-/** Solicitation / payment kill-switch. Only the string "true" enables checkout. */
+/**
+ * Investment-fund kill switch. Only the string "true" would allow fund money.
+ * It stays false until counsel clears solicitation. It does not turn on
+ * stock-checker plan checkout.
+ */
 export function paymentsEnabled(): boolean {
   return process.env.ENABLE_PAYMENTS === "true";
+}
+
+/**
+ * Non-fund plan checkout (stock checker: card or Ixis). Off unless the
+ * string is exactly "true". Does not enable fund payments.
+ */
+export function plansCheckoutEnabled(): boolean {
+  return process.env.HALAXIS_PLANS_CHECKOUT === "true";
 }
 
 export function isSupabaseConfigured(): boolean {

@@ -1,29 +1,31 @@
 import Link from "next/link";
 
+import { PlanCheckoutActions } from "@/components/plan-checkout-actions";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { plansCheckoutEnabled } from "@/lib/flags";
+import { pricingCopy } from "@/lib/pricing";
+import { siteConfig } from "@/lib/site";
 import { apixisWalletBuyUrl } from "@/lib/wallet";
 
 export function PaymentPanel() {
   const buyIxisHref = apixisWalletBuyUrl();
+  const checkoutOn = plansCheckoutEnabled();
 
   return (
     <Card className="border-gold/25">
       <CardHeader>
         <div className="flex items-center justify-between gap-3">
-          <CardTitle className="text-lg">Redeem with Ixis</CardTitle>
-          <Badge variant="outline">Apixis Wallet</Badge>
+          <CardTitle className="text-lg">Stock checker</CardTitle>
+          <Badge variant="outline">Card or Ixis</Badge>
         </div>
         <CardDescription>
-          All Halaxis access is redeemed with Ixis points. Buy Ixis in Apixis Wallet — cash is credited only there (100 Ixis = $1 USD).
-          Ixis is closed-loop platform credit, non-withdrawable, and not an investment. Halaxis does not run a separate card checkout.
+          {pricingCopy.stockChecker} Ixis is closed-loop platform credit bought in Apixis Wallet,
+          non-withdrawable, and not an investment.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/*
-          TODO(ixis-balance): see src/lib/wallet.ts. Do not call Wallet
-          GET /api/v1/wallet with a Halaxis session.
-        */}
+        <PlanCheckoutActions enabled={checkoutOn} />
         <p className="text-sm">
           <a
             href={buyIxisHref}
@@ -31,12 +33,22 @@ export function PaymentPanel() {
           >
             Buy Ixis
           </a>
+          <span className="text-muted-foreground"> · 100 Ixis = $1</span>
+        </p>
+        <p className="text-sm text-muted-foreground">{pricingCopy.fund}</p>
+        <p className="text-sm text-muted-foreground">
+          {pricingCopy.advisors} Use the interest form on this page or{" "}
+          <a className="text-gold underline-offset-4 hover:underline" href={`mailto:${siteConfig.email}`}>
+            {siteConfig.email}
+          </a>
+          .
         </p>
         <p className="text-sm text-muted-foreground">
-          Halaxis membership opens after Awad sets tier amounts. Express interest on the{" "}
+          {pricingCopy.notCertification} Express fund interest on the{" "}
           <Link href="/contact" className="text-gold underline-offset-4 hover:underline">
             accredited-investor form
-          </Link>.
+          </Link>
+          .
         </p>
       </CardContent>
     </Card>
