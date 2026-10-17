@@ -5,7 +5,7 @@ export const siteConfig = {
   domain: "halaxis.dev",
   description:
     "Halaxis is a Halal- and Sharia-aligned investment platform in formation. Formal scholar review is pending. Marketing and accredited-investor interest only — not an offer of securities.",
-  url: (process.env.NEXT_PUBLIC_APP_URL || "https://halaxis.dev").replace(
+  url: (process.env.NEXT_PUBLIC_APP_URL || "https://halaxis.apixis.dev").replace(
     /\/$/,
     "",
   ),

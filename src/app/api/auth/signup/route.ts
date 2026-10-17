@@ -50,7 +50,7 @@ export async function POST(request: Request) {
   const { email, redirectTo } = parsed.data;
 
   try {
-    const defaultRedirect = `${process.env.NEXT_PUBLIC_APP_URL || "https://halaxis.vercel.app"}/auth/callback`;
+    const defaultRedirect = `${process.env.NEXT_PUBLIC_APP_URL || "https://halaxis.apixis.dev"}/auth/callback`;
     // Send magic link
     const { error } = await supabase.auth.signInWithOtp({
       email,

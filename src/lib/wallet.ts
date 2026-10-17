@@ -27,14 +27,14 @@ export const HALAXIS_WALLET_RETURN_PATH = "/contact";
 /**
  * Absolute HTTPS URL of this Halaxis app.
  * `siteConfig.url` is `NEXT_PUBLIC_APP_URL` with a trailing slash removed,
- * or `https://halaxis.dev` when that env var is unset.
+ * or `https://halaxis.apixis.dev` when that env var is unset.
  * Non-HTTPS values (local `http://localhost`) are not allowlisted, so those
  * builds fall back to the public HTTPS origin instead of sending an http return.
  */
 export function halaxisPublicUrl(): string {
   return siteConfig.url.startsWith("https://")
     ? siteConfig.url
-    : "https://halaxis.dev";
+    : "https://halaxis.apixis.dev";
 }
 
 export function halaxisWalletReturnUrl(): string {
