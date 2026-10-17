@@ -56,3 +56,7 @@ Entry format:
 ## 2026-10-14 — Grok (Cursor cloud agent)
 - Changed: Locked stock-checker prices on the existing contact, screen, home FAQ, and privacy pages. Non-fund checkout (Stripe card on the shared Apixis Dev LLC account, or Ixis via Apixis Wallet) behind `HALAXIS_PLANS_CHECKOUT` (off by default), with a receipt and ledger code path plus an unapplied migration. Removed the broken Stripe checkout button, old `/checkout` pages, and both `landing.html` copies. Added a Vercel cron for `/api/agents/tick`. Tests for pricing, flags, and the receipt ledger.
 - Why: Launch checklist items that do not need Awad's input. Fund money stays behind `ENABLE_PAYMENTS=false`. No Halal or Sharia certification claim. Signup stays Apixis ID only.
+
+## 2026-10-17 — Grok (Cursor cloud agent)
+- Changed: Added `public/brand/` to the family brand-kit standard: logo-full, logo-full-white, mark, mark-white, favicon.ico, favicon-32, apple-touch-icon, icon-192, icon-512, og-image, brand.json, and README. Header, metadata icons, web manifest, and Open Graph/Twitter image use those names. Removed `src/app/icon.tsx`, `src/app/opengraph-image.tsx`, `src/app/twitter-image.tsx`, and `public/images/halaxis-monogram.png`. Banner and Facebook images are not in this kit.
+- Why: The official mark is a transparent PNG. The favicon and social image were generated cards with a solid background, and there was no apple-touch icon. One folder, the standard file names, and brand.json. Theme and layout unchanged.
