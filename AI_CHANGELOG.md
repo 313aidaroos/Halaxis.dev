@@ -58,5 +58,5 @@ Entry format:
 - Why: Launch checklist items that do not need Awad's input. Fund money stays behind `ENABLE_PAYMENTS=false`. No Halal or Sharia certification claim. Signup stays Apixis ID only.
 
 ## 2026-10-17 — Grok (Cursor cloud agent)
-- Changed: Added `public/brand/` (logo-full, logo-full-white, mark, mark-white, favicon, apple-touch-icon, 192 and 512 icons, og-image, README). Header, metadata icons, web manifest, and Open Graph/Twitter image now use that kit. Removed `src/app/icon.tsx`, `src/app/opengraph-image.tsx`, `src/app/twitter-image.tsx`, and `public/images/halaxis-monogram.png`.
-- Why: The official mark is a transparent PNG. The favicon and social image were generated cards with a solid background, and there was no apple-touch icon. The kit keeps that mark's transparency and is the only logo/icon source. No theme or layout change.
+- Changed: Added `public/brand/` to the family brand-kit standard: logo-full, logo-full-white, mark, mark-white, favicon.ico, favicon-32, apple-touch-icon, icon-192, icon-512, og-image, brand.json, and README. Header, metadata icons, web manifest, and Open Graph/Twitter image use those names. Removed `src/app/icon.tsx`, `src/app/opengraph-image.tsx`, `src/app/twitter-image.tsx`, and `public/images/halaxis-monogram.png`. Banner and Facebook images are not in this kit.
+- Why: The official mark is a transparent PNG. The favicon and social image were generated cards with a solid background, and there was no apple-touch icon. One folder, the standard file names, and brand.json. Theme and layout unchanged.
