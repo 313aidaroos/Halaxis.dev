@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Brand } from "@/components/brand";
+import { IxisCompanies } from "@/components/IxisCompanies";
 import { legalNavItems, navItems, siteConfig } from "@/lib/site";
 export function SiteFooter() {
   return (
@@ -42,6 +43,9 @@ export function SiteFooter() {
             </li>
             <li>
               <Link href="/auth/login">Sign in / Create account</Link>
+            </li>
+            <li>
+              <IxisCompanies current="Halaxis" />
             </li>
           </ul>
         </div>
